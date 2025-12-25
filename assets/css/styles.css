@@ -1,0 +1,166 @@
+body {
+    padding: 1em;
+    font-family: "Roboto";
+    background-color: #f4f4f4;
+}
+
+h1, h2, h3, h4, h5, h6, .heading-font {
+    font-family: "DM Serif Display", serif;
+}
+
+.nyt-logo-font {
+  font-family: "UnifrakturMaguntia", cursive;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.container {
+    padding-top: 1em;
+    padding-bottom: 0.5em;
+}
+
+/* Navbar */
+
+.navbar {
+    background-color: #f4f4f4;
+}
+
+.navbar-brand {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand .logo {
+    font-size: 1.25em;
+    padding-right: 5px;
+    border-right: 1px solid #555;
+}
+
+.navbar-brand .title {
+    font-size: 1.5em;
+    padding-left: 5px;
+}
+
+#fixed-navbar-spacing {
+    height: 40px;
+}
+
+/* Greetings */
+
+.container.intro,
+.container.outro {
+    text-align: center;
+}
+
+.ribbon {
+  font-size: 0.9em;
+  color: #fff;
+  transform: rotate(-2deg);
+  margin: 5px 0;
+}
+
+.ribbon {
+  --s: 1.8em; /* the ribbon size */
+  --d: .8em;  /* the depth */
+  --c: .8em;  /* the cutout part */
+  
+  padding: var(--d) calc(var(--s) + .5em);
+  line-height: 2;
+  background: 
+    conic-gradient(from  45deg at left  var(--s) top var(--d),
+     #0008 12.5%,#0000 0 37.5%,#0004 0) 0   /50% 100% no-repeat,
+    conic-gradient(at right var(--s) bottom var(--d),
+     #0004 62.5%,#0008 0 75%,#0000 0) 100%/50% 100% no-repeat;
+  clip-path: polygon(100% calc(2*var(--d)),calc(100% - var(--s)) calc(2*var(--d)),calc(100% - var(--s)) var(--d),calc(var(--s) + var(--d)) var(--d),calc(var(--s) + var(--d)) 0,0 0,var(--c) calc(50% - var(--d)),0 calc(100% - 2*var(--d)),var(--s) calc(100% - 2*var(--d)),var(--s) calc(100% - var(--d)),calc(100% - var(--s) - var(--d)) calc(100% - var(--d)),calc(100% - var(--s) - var(--d)) 100%,100% 100%,calc(100% - var(--c)) calc(50% + var(--d)));
+  background-color: #6aaa63; /* the main color */
+}
+
+/* Game cards */
+
+.container.game {
+    display: flex;
+    overflow-x: scroll;
+}
+
+.container.game::-webkit-scrollbar {
+    display: none;
+}
+
+.container .card {
+    margin-right: 1em;
+    min-width: auto;
+    border: none;
+}
+
+.container .card.main-card {
+    min-width: 90%;
+}
+
+.container .card.thumbnail-card {
+    min-width: 50%;
+}
+
+.container .card.thumbnail-card .badge {
+    padding: 6px;
+    box-shadow: 1px 1px 5px #aaa;
+}
+
+.card .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card .card-body-description {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5em;
+}
+
+.card .card-body-description .card-title {
+    font-weight: 700;
+}
+
+.card .card-body-description .card-text {
+    opacity: 0.75;
+}
+
+.card .card-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card .card-links .card-link.date {
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.card .card-links .card-link.author {
+    font-size: 0.9em;
+    opacity: 0.75;
+}
+
+.card#the-mini-card {
+    background-color: #96BEFA;
+    border: none;
+}
+
+.card#wordle-card {
+    background-color: #e3e3e1;
+    border: none;
+}
+
+.card#connections-card {
+    background-color: #b4a8ff;
+    border: none;
+}
+
+.card#strands-card {
+    background-color: #c0ddd9;
+    border: none;
+}
