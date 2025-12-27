@@ -1,6 +1,5 @@
 body {
-    font-family: "Roboto";
-    background-color: #f4f4f4;
+    font-family: "Roboto", sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6, .heading-font {
@@ -30,7 +29,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 /* Navbar */
 
 .navbar {
-    background-color: #f4f4f4;
+    background-color: #fff;
 }
 
 .navbar-brand {
@@ -190,6 +189,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 .container.game-container {
     position: absolute;
     top: 0;
+    overflow: hidden;
 }
 
 .container.intro-screen-container {
@@ -233,6 +233,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     display: flex;
     flex-direction: column;
     height: 100%;
+    background-color: #fff;
 }
 
 .container.game-container .game-navbar {
@@ -349,4 +350,154 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 .wordle-keyboard .keyboard-row .one-and-a-half-key {
     flex: 1.5;
     font-size: 12px;
+}
+
+/* Connections */
+
+.container.intro-screen-container.connections {
+    background-color: rgb(179, 167, 254);
+}
+
+.instructions,
+.mistakes-counter,
+.action-buttons {
+    text-align: center;
+}
+
+.instructions {
+    margin-top: 1em;
+}
+
+.connections-board {
+    position: relative;
+    margin: 20px auto;
+    width: calc(2 * 8px + 4 * 22.5vw);
+    height: calc(2 * 8px + 4 * 22.5vw);
+}
+
+.connections-grid {
+    position: absolute;
+    bottom: 0;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0 auto;
+    width: calc(2 * 8px + 4 * 22.5vw);
+    height: calc(2 * 8px + 4 * 22.5vw);
+    display: grid;
+    gap: 8px;
+    min-height: 0;
+    min-width: 0;
+}
+
+.connections-tile {
+    text-align: center;
+    font-size: 16px;
+    overflow: hidden;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    border-radius: 6px;
+    position: relative;
+    cursor: pointer;
+    font-weight: 700;
+    text-transform: uppercase;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    background-color: #efefe6;
+    color: #121212;
+    z-index: 0;
+    container-type: inline-size;
+    font-size: clamp(10px, 3cqi, 16px)
+}
+
+.connections-tile.selected {
+    background-color: #5a594e;
+    color: #f8f8f8;
+    z-index: 1;
+}
+
+.mistakes-counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #5a594e;
+}
+
+.mistakes-counter .mistake-bubbles {
+    display: flex;
+    gap: calc(4px * 2.5);
+    margin-left: calc(4px * 2.5);
+    min-width: 120px;
+}
+
+.mistakes-counter .mistake-bubbles .mistake-bubble {
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    background-color: #5a594e;
+}
+
+.action-buttons #submit-button:enabled {
+    background-color: #121212;
+    color: #f8f8f8;
+}
+
+.connections-solved {
+    width: calc(2 * 8px + 4 * 22.5vw);
+    height: calc(2 * 8px + 4 * 22.5vw);
+    gap: 8px;
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    grid-template-rows: repeat(4, 1fr);
+    position: absolute;
+    grid-template-columns: 1fr;
+    top: 0;
+    margin: 0 auto;
+}
+
+.answer-group {
+    text-align: center;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 6px;
+    z-index: 1;
+    animation-fill-mode: forwards;
+    overflow: hidden;
+    min-width: 0;
+    color: #121212;
+    font-size: 15px;
+    line-height: 18px;
+}
+
+.answer-group p {
+    margin-bottom: 0;
+}
+
+.answer-group .answer-heading {
+    font-weight: 700;
+}
+
+.answer-group#answer-0 {
+    background-color: #f9df6d;
+}
+
+.answer-group#answer-1 {
+    background-color: #a0c35a;
+}
+
+.answer-group#answer-2 {
+    background-color: #b0c4ef;
+}
+
+.answer-group#answer-3 {
+    background-color: #ba81c5;
 }

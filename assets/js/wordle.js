@@ -2,9 +2,20 @@ function hideIntroPage() {
     document.getElementsByClassName('intro-screen-container')[0].style.display = "none";
 }
 
+function goBack() {
+    window.history.back();
+}
+
+const Status = Object.freeze({
+  ABSENT: 0,
+  PRESENT: 1,
+  CORRECT: 2,
+});
 const SECRET_WORD = "WATER";
+var pastSubmittedWords = [];
 var tileIndex = 0;
 var inputWord = "";
+var numMistakesRemaining = 6;
 var canType = true;
 var canBackspace = true;
 
@@ -34,51 +45,38 @@ function backspaceInputLetter() {
     }
 }
 
-function doesInputMatchSecretWord() {
-    /**
-     * 0 means the letter is not found in the secret word
-     * 1 means the letter is found in the secret word but in the incorrect position
-     * 2 means the letter is found in the secret word and in the correct position
-     */
-    var inputMatchArray = [];
-    for (var i = 0; i < inputWord.length; i++) {
-        if (inputWord[i] == SECRET_WORD[i]) {
-            inputMatchArray[i] = 2;
-        } else if (SECRET_WORD.includes(inputWord[i])) {
-            inputMatchArray[i] = 1;
-        } else {
-            inputMatchArray[i] = 0;
-        }
-    }
-    return inputMatchArray;
-}
-
 function submitInputWord() {
     if (inputWord.length == 5) {
-        var matches = doesInputMatchSecretWord();
-        console.log(matches);
-        /**
-         * Mark the tiles based on the letter match number
-         * 0: absent
-         * 1: present
-         * 2: correct
-         */
+        var matches = [];
         for (var i = 0; i < inputWord.length; i++) {
             var tileIndexToGrade = tileIndex - (5 - i);
-            if (matches[i] == 0) {
-                document.getElementById(tileIndexToGrade).classList.add("absent");
-            } else if (matches[i] == 1) {
-                document.getElementById(tileIndexToGrade).classList.add("present");
-            } else if (matches[i] == 2) {
+            if (inputWord[i] == SECRET_WORD[i]) {
+                matches[i] = Status.CORRECT;
                 document.getElementById(tileIndexToGrade).classList.add("correct");
+            } else if (SECRET_WORD.includes(inputWord[i])) {
+                matches[i] = Status.PRESENT;
+                document.getElementById(tileIndexToGrade).classList.add("present");
+            } else {
+                matches[i] = Status.ABSENT;
+                document.getElementById(tileIndexToGrade).classList.add("absent");
             }
         }
+        console.log(matches);
+        pastSubmittedWords.push(matches);
         inputWord = "";
-        canType = true;
-        canBackspace = false;
+        numMistakesRemaining--;
+        if (numMistakesRemaining == 0) {
+            // Game over
+            console.log("Game over");
+            canBackspace = false;
+        } else {
+            canType = true;
+            canBackspace = false;
+        }
     }
 }
 
+document.getElementById('back-button').addEventListener('click', goBack);
 document.getElementById('play-button').addEventListener('click', hideIntroPage);
 Array.from(document.getElementsByClassName('key')).forEach(function(e) {
     addEventListener('click', typeInputLetter);
