@@ -7,15 +7,17 @@ function goBack() {
 }
 
 const Status = Object.freeze({
-  ABSENT: 0,
-  PRESENT: 1,
-  CORRECT: 2,
+    ABSENT: 0,
+    PRESENT: 1,
+    CORRECT: 2,
 });
+const NUM_LETTERS_IN_A_WORD = 5;
+const NUM_ROWS = 6;
 const SECRET_WORD = "WATER";
 var pastSubmittedWords = [];
 var tileIndex = 0;
 var inputWord = "";
-var numMistakesRemaining = 6;
+var numMistakesRemaining = NUM_ROWS;
 var canType = true;
 var canBackspace = true;
 
@@ -25,7 +27,7 @@ function typeInputLetter(element) {
         document.getElementById(tileIndex).innerHTML = inputLetter;
         inputWord += inputLetter;
         tileIndex++;
-        if (tileIndex % 5 == 0) {
+        if (tileIndex % NUM_LETTERS_IN_A_WORD == 0) {
             canType = false;
         }
         canBackspace = true;
@@ -37,19 +39,19 @@ function backspaceInputLetter() {
         tileIndex--;
         document.getElementById(tileIndex).innerHTML = "";
         inputWord = inputWord.slice(0, -1);
-        if (tileIndex == 0 || tileIndex % 5 != 0) {
+        if (tileIndex == 0 || tileIndex % NUM_LETTERS_IN_A_WORD != 0) {
             canType = true;
-        } else if (tileIndex % 5 == 0) {
+        } else if (tileIndex % NUM_LETTERS_IN_A_WORD == 0) {
             canBackspace = false;
         }
     }
 }
 
 function submitInputWord() {
-    if (inputWord.length == 5) {
+    if (inputWord.length == NUM_LETTERS_IN_A_WORD) {
         var matches = [];
         for (var i = 0; i < inputWord.length; i++) {
-            var tileIndexToGrade = tileIndex - (5 - i);
+            var tileIndexToGrade = tileIndex - (NUM_LETTERS_IN_A_WORD - i);
             if (inputWord[i] == SECRET_WORD[i]) {
                 matches[i] = Status.CORRECT;
                 document.getElementById(tileIndexToGrade).classList.add("correct");

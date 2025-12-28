@@ -1,0 +1,63 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <meta name=description content="nyt advent calendar">
+    <link rel=icon type="image/png" href="../../assets/img/logo.png"/>
+    <title>NYT Advent Calendar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=UnifrakturCook:wght@700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/styles.css">
+</head>
+<body>
+    <div class="container intro-screen-container strands">
+        <div class="intro-screen">
+            <div>
+                <img src="https://www.nytimes.com/games-assets/v2/assets/expansion-games/strands.svg"/>
+                <h1 class="title">Strands</h1>
+                <h3 class="subheading-font">Find hidden words and uncover the day's theme.</h3>
+            </div>
+            <div>
+                <button type="button" class="btn btn-dark" id="play-button">Play</button>
+            </div>
+            <div class="footer">
+                <p><strong>December 24, 2025</strong></p>
+                <p>Day 1</p>
+                <p>Edited by Julia Liu</p>
+            </div>
+        </div>
+    </div>
+    <div class="container game-container">
+        <div class="game-navbar">
+            <button type="button" class="btn" id="back-button">Back</span>
+        </div>
+        <div class="strands-board">
+            <div class="theme-box">
+                <h3 class="body-font">Today's theme</h3>
+                <h1 class="body-font" id="riddle"></h1>
+            </div>
+            <div id="word-spelled"></div>
+            <div class="word-search">
+                <div class="word-search-grid"></div>
+                <div id="stroke-wrapper">
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <g stroke-linecap="round" stroke-width="12" fill="none" id="solved"></g>
+                        <g stroke-linecap="round" stroke-width="12" stroke="#dbd8c5" fill="none" id="in-progress"></g>
+                    </svg>
+                </div>
+            </div>
+            <div class="progress-box">
+                <button type="button" class="btn btn-outline-dark" id="submit-button" disabled>Submit</button>
+                <div class="progress-counter"><b id="num-words-found">0</b> of <b id="total-num-words">0</b> theme words found.</div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/fd1b2e6d82.js" crossorigin="anonymous"></script>
+    <script src="../../assets/js/scripts.js"></script>
+    <script src="../../assets/js/strands.js"></script>
+</body>
+</html>

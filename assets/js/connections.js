@@ -7,10 +7,14 @@ function goBack() {
 }
 
 const Status = Object.freeze({
-  UNSELECTED: 0,
-  SELECTED: 1,
-  CORRECT: 2,
+    UNSELECTED: 0,
+    SELECTED: 1,
+    CORRECT: 2,
 });
+const NUM_TOTAL_WORDS = 16;
+const NUM_WORDS_IN_A_GROUP = 4;
+const NUM_TOTAL_GROUPS = 4;
+const NUM_MISTAKES_ALLOWED = 4;
 // Word groups in order of easiest to most difficult
 const SECRET_GROUPS = [
     { category: "Words that mean dramatic", words: ["theatrical", "showy", "exaggerated", "riveting"] },
@@ -21,15 +25,15 @@ const SECRET_GROUPS = [
 var selectedGroups = [];
 var selectedWords = [];
 var pastSubmittedWords = [];
-var numRowsLeft = 4;
-var numMistakesRemaining = 4;
+var numRowsLeft = NUM_TOTAL_GROUPS;
+var numMistakesRemaining = NUM_MISTAKES_ALLOWED;
 
 function initWords() {
     for (var i = 0; i < SECRET_GROUPS.length; i++) {
         for (var word of SECRET_GROUPS[i].words) {
-            var randomIndex = Math.floor(Math.random() * 16);
+            var randomIndex = Math.floor(Math.random() * NUM_TOTAL_WORDS);
             while (selectedGroups[randomIndex]) {
-                randomIndex = Math.floor(Math.random() * 16);
+                randomIndex = Math.floor(Math.random() * NUM_TOTAL_WORDS);
             }
             selectedGroups[randomIndex] = { "word": word, "status": Status.UNSELECTED };
             document.getElementById(randomIndex).innerHTML = word;
@@ -42,12 +46,12 @@ function clickWord(element) {
     if (element.srcElement.classList.contains("connections-tile")) {
         var wordIndex = element.srcElement.id;
         var word = selectedGroups[wordIndex].word;
-        if (selectedGroups[wordIndex].status == Status.UNSELECTED && selectedWords.length < 4) {
+        if (selectedGroups[wordIndex].status == Status.UNSELECTED && selectedWords.length < NUM_WORDS_IN_A_GROUP) {
             element.srcElement.classList.add("selected");
             selectedGroups[wordIndex].status = Status.SELECTED;
             selectedWords.push(word);
             document.getElementById('deselect-button').disabled = false;
-            if (selectedWords.length == 4) {
+            if (selectedWords.length == NUM_WORDS_IN_A_GROUP) {
                 // Check if this group of selected words has already been submitted
                 var hasBeenSubmitted = false;
                 for (var words of pastSubmittedWords) {
@@ -65,7 +69,7 @@ function clickWord(element) {
             if (selectedWords.length == 0) {
                 document.getElementById('deselect-button').disabled = true;
             }
-            if (selectedWords.length < 4) {
+            if (selectedWords.length < NUM_WORDS_IN_A_GROUP) {
                 document.getElementById('submit-button').disabled = true;
             }
         }
@@ -118,7 +122,7 @@ function submitWords() {
         selectedWords = [];
         document.getElementById('deselect-button').disabled = true;
         document.getElementsByClassName('connections-grid')[0].style.gridTemplateRows = "repeat(" + numRowsLeft + ", 1fr)";
-        document.getElementsByClassName('connections-grid')[0].style.height = "calc(" + 4 * (numRowsLeft - 1) + "px + " + numRowsLeft + " * 22.5vw)";
+        document.getElementsByClassName('connections-grid')[0].style.height = "calc(" + NUM_TOTAL_GROUPS * (numRowsLeft - 1) + "px + " + numRowsLeft + " * 22.5vw)";
     } else {
         numMistakesRemaining--;
         if (numMistakesRemaining < 0) {
