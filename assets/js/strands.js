@@ -104,6 +104,19 @@ function deselectLetter(index, letter) {
     letterTileElement.innerHTML = letter;
 }
 
+function deselectAll() {
+    for (var index of selectedLetterIndices) {
+        var i = Math.floor(index / NUM_ROWS);
+        var j = index % NUM_ROWS;
+        var letter = document.getElementById('button-' + index).innerHTML;
+        deselectLetter(index, letter);
+        wordStatusGrid[i][j] = Status.UNSELECTED;
+    }
+    selectedLetterIndices = [];
+    wordSpelled = "";
+    document.getElementById('submit-button').disabled = true;
+}
+
 function drawWordStroke(pathType) {
     if (pathType == Path.CORRECT || pathType == Path.SPANGRAM) {
         var existingPathElement = document.getElementById('in-progress').firstChild;
@@ -127,6 +140,8 @@ function drawWordStroke(pathType) {
         if (pathD) {
             var pathElement = '<path d="' + pathD + '"></path>';
             document.getElementById('in-progress').innerHTML = pathElement;
+        } else {
+            document.getElementById('in-progress').firstChild.remove();
         }
     }
 }
@@ -148,17 +163,7 @@ function clickLetter(element) {
         var m = Math.floor(lastSelectedIndex / NUM_ROWS);
         var n = lastSelectedIndex % NUM_ROWS;
         var letter = element.srcElement.innerHTML;
-        if (wordStatusGrid[i][j] == Status.UNSELECTED && (!m && !n || Math.abs(m - i) <= 1 && Math.abs(n - j) <= 1)) {
-            // Can only select if the letter is within the 3x3 radius of the most recently selected letter
-            selectLetter(index, letter);
-            selectedLetterIndices.push(index);
-            wordStatusGrid[i][j] = Status.SELECTED;
-            wordSpelled += letter;
-            drawWordStroke();
-            document.getElementById('word-spelled').classList.remove('spangram');
-            document.getElementById('word-spelled').classList.remove('correct');
-            document.getElementById('word-spelled').innerHTML = wordSpelled;
-        } else if (wordStatusGrid[i][j] == Status.SELECTED && m == i && n == j) {
+        if (wordStatusGrid[i][j] == Status.SELECTED && m == i && n == j) {
             // Can only deselect if the letter is the most recently selected letter
             if (!isButton) letter = element.srcElement.children[0].innerHTML;
             deselectLetter(index, letter);
@@ -166,6 +171,19 @@ function clickLetter(element) {
             wordStatusGrid[i][j] = Status.UNSELECTED;
             wordSpelled = wordSpelled.slice(0, -1);
             drawWordStroke();
+            document.getElementById('word-spelled').innerHTML = wordSpelled;
+        } else if (wordStatusGrid[i][j] == Status.UNSELECTED) {
+            if (!m && !n || Math.abs(m - i) > 1 || Math.abs(n - j) > 1) {
+                // Start new path if the letter is outside of 3x3 radius
+                deselectAll();
+            }
+            selectLetter(index, letter);
+            selectedLetterIndices.push(index);
+            wordStatusGrid[i][j] = Status.SELECTED;
+            wordSpelled += letter;
+            drawWordStroke();
+            document.getElementById('word-spelled').classList.remove('spangram');
+            document.getElementById('word-spelled').classList.remove('correct');
             document.getElementById('word-spelled').innerHTML = wordSpelled;
         }
         if (wordSpelled.length < MIN_WORD_LENGTH) {
@@ -208,23 +226,14 @@ function submitWord() {
         }
     }
     if (!isWordCorrect) {
-        // Deselect all
-        for (var index of selectedLetterIndices) {
-            var i = Math.floor(index / NUM_ROWS);
-            var j = index % NUM_ROWS;
-            var letter = document.getElementById('button-' + index).innerHTML;
-            deselectLetter(index, letter);
-            wordStatusGrid[i][j] = Status.UNSELECTED;
-        }
         if (wordSpelled.length < MIN_WORD_LENGTH) {
             document.getElementById('word-spelled').innerHTML = TOO_SHORT_MESSAGE;
         } else {
             document.getElementById('word-spelled').innerHTML = NOT_IN_WORD_LIST_MESSAGE;
         }
-        selectedLetterIndices = [];
-        wordSpelled = "";
+        // Deselect all
+        deselectAll();
         drawWordStroke();
-        document.getElementById('submit-button').disabled = true;
     }
 }
 

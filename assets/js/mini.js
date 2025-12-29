@@ -29,7 +29,7 @@ const NUM_COLS = 5;
 const SECRET_WORDS = [
     { hint: "___ Poehler", word: "Amy", startPosition: 2, direction: Direction.ACROSS },
     { hint: "Lil' Sebastian", word: "Horse", startPosition: 10, direction: Direction.ACROSS },
-    { hint: "Skim ___ is just water lying about being ___", word: "Milk", startPosition: 20, direction: Direction.ACROSS },
+    { hint: "\"Skim ___ is just water lying about being ___\"", word: "Milk", startPosition: 20, direction: Direction.ACROSS },
     { hint: "Ron's assistant", word: "April", startPosition: 2, direction: Direction.DOWN },
     { hint: "An adlib repeated in a rap song", word: "Yeet", startPosition: 4, direction: Direction.DOWN },
     { hint: "Impulse", word: "Whim", startPosition: 5, direction: Direction.DOWN },
