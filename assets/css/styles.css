@@ -1,5 +1,5 @@
 body, .body-font {
-    font-family: "Roboto", sans-serif;
+    font-family: "Roboto", "Arial", sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6, .heading-font {
@@ -235,15 +235,174 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     flex-direction: column;
     height: 100%;
     background-color: #fff;
+    padding: 0;
 }
 
 .container.game-container .game-navbar {
+    display: flex;
     border-bottom: 1px solid #aaa;
-    padding: 0.5em 0;
+    padding: 0.5em 0.5em;
 }
 
-.container.game-container .game-navbar .btn#back-button {
+.container.game-container .game-navbar .btn {
     padding: 0 10px;
+}
+
+/* The Mini */
+
+.container.intro-screen-container.mini {
+    background-color: #6493e6;
+}
+
+.game-navbar #timer {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 100px;
+    flex-wrap: nowrap;
+    font-size: 16px;
+}
+
+.mini-board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    height: 100vh;
+}
+
+.mini-board .puzzle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    flex: 1;
+    height: calc(100% - 93px - 120px);
+    padding: 10px;
+    overflow: hidden;
+    width: 100vw;
+}
+
+.mini-board .puzzle .puzzle-board {
+    height: 100%;
+    width: 100%;
+}
+
+.mini-board .puzzle .puzzle-board .crossword {
+    display: block;
+    user-select: none;
+    width: 100%;
+    height: 100%;
+}
+
+.mini-board .puzzle .puzzle-board .crossword .cell {
+    fill: #000;
+}
+
+.mini-board .puzzle .puzzle-board .crossword .cell-unfilled {
+    fill: #fff;
+}
+
+.mini-board .puzzle .puzzle-board .crossword .cell-highlighted {
+    fill: #a7d8ff;
+}
+
+.mini-board .puzzle .puzzle-board .crossword .cell-selected {
+    fill: #ffda00;
+}
+
+.mini-board .keyboard-controls {
+    width: 100vw;
+}
+
+.mini-board .keyboard-controls .clue-bar {
+    background-color: #a7d8ff;
+    bottom: 170px;
+    font-size: 19px;
+    line-height: 21px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.mini-board .keyboard-controls .clue-bar #left,
+.mini-board .keyboard-controls .clue-bar #right {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mini-board .keyboard-controls .clue-bar #left {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.mini-board .keyboard-controls .clue-bar #right {
+    padding-right: 16px;
+}
+
+.mini-board .keyboard-controls .clue-bar #hint {
+    flex-grow: 2;
+}
+
+.mini-board .keyboard-controls .mini-keyboard {
+    padding: 16px 12px;
+    font-size: 24px;
+    overflow: visible;
+    border-radius: 0;
+    background-color: #e4eaef;
+    z-index: 0;
+    position: relative;
+}
+
+.mini-board .keyboard-controls .mini-keyboard .keyboard-row {
+    display: flex;
+    min-height: 40px;
+}
+
+.mini-board .keyboard-controls .mini-keyboard .keyboard-row:not(:last-child) {
+    margin-bottom: 12px;
+}
+
+.mini-board .keyboard-controls .mini-keyboard .keyboard-row .key {
+    flex-grow: 1;
+    align-items: center;
+    background: #fff;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    height: 40px;
+    justify-content: center;
+    padding: 5px;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    padding-top: 8px;
+    width: 20px;
+    min-height: 40px;
+    min-width: 20px;
+    border-radius: 4px;
+    z-index: 0;
+    position: relative;
+    box-shadow: none;
+    border: none;
+    border-bottom: 1px solid #c9d1d9;
+    margin-right: calc(4px * 1.5);
+}
+
+.mini-board .keyboard-controls .mini-keyboard .keyboard-row .key#change-key,
+.mini-board .keyboard-controls .mini-keyboard .keyboard-row .key#backspace-key {
+    background-color: #c9d1d9;
+    border-bottom: 1px solid #b3bdc4;
+}
+
+.mini-board .keyboard-controls .mini-keyboard .keyboard-row .key#change-key {
+    font-size: 14px;
 }
 
 /* Wordle */
@@ -311,8 +470,9 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 }
 
 .wordle-keyboard {
-    height: 200px;
+    height: 224;
     user-select: none;
+    padding: 16px 12px;
 }
 
 .wordle-keyboard .keyboard-row {

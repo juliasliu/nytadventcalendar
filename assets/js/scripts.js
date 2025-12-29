@@ -1,3 +1,7 @@
+function goToMiniGame() {
+  window.location.href = './games/mini/index.html';
+}
+
 function goToWordleGame() {
   window.location.href = './games/wordle/index.html';
 }
@@ -11,6 +15,9 @@ function goToStrandsGame() {
 }
 
 /* Add click functions to the main game cards */
+if (document.getElementById('the-mini-card')) {
+    document.getElementById('the-mini-card').addEventListener('click', goToMiniGame);
+}
 if (document.getElementById('wordle-card')) {
     document.getElementById('wordle-card').addEventListener('click', goToWordleGame);
 }
