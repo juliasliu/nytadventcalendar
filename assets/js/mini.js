@@ -1,5 +1,6 @@
 function hideIntroPage() {
     document.getElementsByClassName('intro-screen-container')[0].style.display = "none";
+    isGameInProgress = true;
     startStopwatch();
 }
 
@@ -87,6 +88,7 @@ var crosswordStatusGrid = [];
 var currentIndex = NUM_ROWS * NUM_COLS;
 var currentWordIndex = 0;
 var currentDirection = Direction.ACROSS;
+var isGameInProgress = false;
 var stopwatchId;
 var secondsPassed = 0;
 
@@ -141,10 +143,19 @@ function initWords() {
 
 function startStopwatch() {
     // Start the interval, saving the ID to a variable
-    stopwatchId = setInterval(function() {
-        secondsPassed++;
-        document.getElementById('timer').innerHTML = Math.floor(secondsPassed / 60) + ':' + String(secondsPassed % 60).padStart(2, '0');
-    }, 1000);
+    if (!stopwatchId && isGameInProgress) {
+        stopwatchId = setInterval(function() {
+            secondsPassed++;
+            document.getElementById('timer').innerHTML = Math.floor(secondsPassed / 60) + ':' + String(secondsPassed % 60).padStart(2, '0');
+        }, 1000);
+    }
+}
+
+function stopStopwatch() {
+    if (stopwatchId) {
+        clearInterval(stopwatchId);
+        stopwatchId = null;
+    }
 }
 
 function highlightTiles() {
@@ -414,3 +425,13 @@ Array.from(document.getElementsByClassName('key')).forEach(function(e) {
 document.getElementById('backspace-key').addEventListener('click', backspace);
 
 initWords();
+
+// If user navigates away from window, pause stopwatch
+window.addEventListener('blur', function (e) {
+    stopStopwatch();
+});
+
+// If user navigates back to window, start stopwatch
+window.addEventListener('focus', function (e) {
+    startStopwatch();
+});

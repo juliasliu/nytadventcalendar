@@ -100,6 +100,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     margin-right: 1em;
     min-width: auto;
     border: none;
+    border-radius: 1em;
 }
 
 .container .card.main-card {
@@ -139,6 +140,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 
 .card .card-body-description div .card-text {
     opacity: 0.75;
+    line-height: 1.2;
 }
 
 .card .card-body-description img {
@@ -269,26 +271,19 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: nowrap;
     height: 100vh;
 }
 
 .mini-board .puzzle {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
     flex: 1;
-    height: calc(100% - 93px - 120px);
     padding: 10px;
     overflow: hidden;
     width: 100vw;
 }
 
 .mini-board .puzzle .puzzle-board {
-    height: 100%;
     width: 100%;
 }
 
@@ -296,7 +291,6 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     display: block;
     user-select: none;
     width: 100%;
-    height: 100%;
 }
 
 .mini-board .puzzle .puzzle-board .crossword .cell {

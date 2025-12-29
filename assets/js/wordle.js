@@ -11,15 +11,31 @@ const Status = Object.freeze({
     PRESENT: 1,
     CORRECT: 2,
 });
+const DICTIONARY_PATH = "../../assets/txt/dict.txt";
 const NUM_LETTERS_IN_A_WORD = 5;
 const NUM_ROWS = 6;
 const SECRET_WORD = "WATER";
+var dictionary = {};
 var pastSubmittedWords = [];
 var tileIndex = 0;
 var inputWord = "";
 var numMistakesRemaining = NUM_ROWS;
 var canType = true;
 var canBackspace = true;
+
+function loadDictionary() {
+    const response = fetch(DICTIONARY_PATH)
+    .then(response => {
+        if (!response.ok) {
+            console.error("Could not load the dictionary", error);
+        }
+    })
+    .then(data => {
+        const itemsArray = data.split('\\n').map(item => item.trim()).filter(item => item.length > 0);
+        dictionary = new Set(itemsArray);
+        console.log("Loaded dictionary");
+    });
+}
 
 function typeInputLetter(element) {
     if (element.srcElement.className == "key" && canType) {
@@ -48,7 +64,7 @@ function backspaceInputLetter() {
 }
 
 function submitInputWord() {
-    if (inputWord.length == NUM_LETTERS_IN_A_WORD) {
+    if (inputWord.length == NUM_LETTERS_IN_A_WORD && isWordValid()) {
         var matches = [];
         for (var i = 0; i < inputWord.length; i++) {
             var tileIndexToGrade = tileIndex - (NUM_LETTERS_IN_A_WORD - i);
@@ -78,6 +94,12 @@ function submitInputWord() {
     }
 }
 
+function isWordValid() {
+    var word = inputWord.toLowerCase();
+    word = word.replace(/^./, (char) => char.toUpperCase());
+    return dictionary.has(word);
+}
+
 document.getElementById('back-button').addEventListener('click', goBack);
 document.getElementById('play-button').addEventListener('click', hideIntroPage);
 Array.from(document.getElementsByClassName('key')).forEach(function(e) {
@@ -85,3 +107,5 @@ Array.from(document.getElementsByClassName('key')).forEach(function(e) {
 });
 document.getElementById('backspace-key').addEventListener('click', backspaceInputLetter);
 document.getElementById('enter-key').addEventListener('click', submitInputWord);
+
+loadDictionary();
