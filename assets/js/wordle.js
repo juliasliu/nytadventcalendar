@@ -25,11 +25,7 @@ var canBackspace = true;
 
 function loadDictionary() {
     const response = fetch(DICTIONARY_PATH)
-    .then(response => {
-        if (!response.ok) {
-            console.error("Could not load the dictionary", error);
-        }
-    })
+    .then(response => response.text())
     .then(data => {
         const itemsArray = data.split('\\n').map(item => item.trim()).filter(item => item.length > 0);
         dictionary = new Set(itemsArray);
