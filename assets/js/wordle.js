@@ -27,7 +27,7 @@ function loadDictionary() {
     const response = fetch(DICTIONARY_PATH)
     .then(response => response.text())
     .then(data => {
-        const itemsArray = data.split('\\n').map(item => item.trim()).filter(item => item.length > 0);
+        const itemsArray = data.split('\n').map(item => item.trim()).filter(item => item.length > 0);
         dictionary = new Set(itemsArray);
         console.log("Loaded dictionary");
     });
@@ -92,7 +92,6 @@ function submitInputWord() {
 
 function isWordValid() {
     var word = inputWord.toLowerCase();
-    word = word.replace(/^./, (char) => char.toUpperCase());
     return dictionary.has(word);
 }
 
