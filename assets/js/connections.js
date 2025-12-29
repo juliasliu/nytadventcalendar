@@ -36,7 +36,9 @@ function initWords() {
                 randomIndex = Math.floor(Math.random() * NUM_TOTAL_WORDS);
             }
             selectedGroups[randomIndex] = { "word": word, "status": Status.UNSELECTED };
-            document.getElementById(randomIndex).innerHTML = word;
+            var tileElement = document.getElementById(randomIndex);
+            tileElement.innerHTML = word;
+            tileElement.style.fontSize = "calc(22.5vw / " + Math.max(8, word.length) + " + 2px)";
         }
     }
     console.log(selectedGroups);

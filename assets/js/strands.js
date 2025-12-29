@@ -43,14 +43,14 @@ const SECRET_WORDS = [
     "TVOFF", // 5
 ];
 const SECRET_WORD_GRID = [
-    ['E', 'K', 'A', 'B', 'O', 'F'],
-    ['E', 'P', 'R', 'O', 'O', 'F'],
-    ['K', 'R', 'D', 'I', 'C', 'V'],
-    ['E', 'E', 'N', 'K', 'T', 'T'],
-    ['H', 'B', 'A', 'U', 'S', 'E'],
-    ['T', 'B', 'E', 'Q', 'S', 'A'],
-    ['U', 'L', 'U', 'P', 'H', 'I'],
-    ['L', 'E', 'U', 'P', 'O', 'R'],
+    ['K', 'E', 'R', 'I', 'S', 'E'],
+    ['S', 'N', 'D', 'C', 'K', 'T'],
+    ['Q', 'F', 'F', 'O', 'V', 'T'],
+    ['P', 'U', 'E', 'U', 'E', 'U'],
+    ['E', 'A', 'L', 'P', 'H', 'P'],
+    ['E', 'B', 'B', 'H', 'E', 'O'],
+    ['K', 'O', 'O', 'T', 'R', 'R'],
+    ['A', 'B', 'L', 'U', 'A', 'I'],
 ]
 var wordStatusGrid = [];
 var selectedLetterIndices = [];

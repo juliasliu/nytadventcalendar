@@ -17,8 +17,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 }
 
 .container {
-    padding-top: 1em;
-    padding-bottom: 0.5em;
+    padding: 1em 1em 0.5em 1em;
 }
 
 .btn {
@@ -121,6 +120,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    padding: 1rem 1.5rem;
 }
 
 .card .card-body-description {
@@ -267,52 +267,50 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     font-size: 16px;
 }
 
-.mini-board {
+.mini-board,
+.wordle-board {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    flex-grow: 1;
     flex-wrap: nowrap;
-    height: 100vh;
+    width: 100vw;
+    padding: 20px;
+    overflow: hidden;
 }
 
 .mini-board .puzzle {
-    padding: 10px;
-    overflow: hidden;
-    width: 100vw;
-}
-
-.mini-board .puzzle .puzzle-board {
     width: 100%;
 }
 
-.mini-board .puzzle .puzzle-board .crossword {
+.mini-board .puzzle .crossword {
     display: block;
     user-select: none;
     width: 100%;
 }
 
-.mini-board .puzzle .puzzle-board .crossword .cell {
+.mini-board .puzzle .crossword .cell {
     fill: #000;
 }
 
-.mini-board .puzzle .puzzle-board .crossword .cell-unfilled {
+.mini-board .puzzle .crossword .cell-unfilled {
     fill: #fff;
 }
 
-.mini-board .puzzle .puzzle-board .crossword .cell-highlighted {
+.mini-board .puzzle .crossword .cell-highlighted {
     fill: #a7d8ff;
 }
 
-.mini-board .puzzle .puzzle-board .crossword .cell-selected {
+.mini-board .puzzle .crossword .cell-selected {
     fill: #ffda00;
 }
 
-.mini-board .keyboard-controls {
+.mini-keyboard {
     width: 100vw;
 }
 
-.mini-board .keyboard-controls .clue-bar {
+.mini-keyboard .clue-bar {
     background-color: #a7d8ff;
     bottom: 170px;
     font-size: 19px;
@@ -324,28 +322,28 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     width: 100%;
 }
 
-.mini-board .keyboard-controls .clue-bar #left,
-.mini-board .keyboard-controls .clue-bar #right {
+.mini-keyboard .clue-bar #left,
+.mini-keyboard .clue-bar #right {
     height: 44px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.mini-board .keyboard-controls .clue-bar #left {
+.mini-keyboard .clue-bar #left {
     padding-left: 16px;
     padding-right: 16px;
 }
 
-.mini-board .keyboard-controls .clue-bar #right {
+.mini-keyboard .clue-bar #right {
     padding-right: 16px;
 }
 
-.mini-board .keyboard-controls .clue-bar #hint {
+.mini-keyboard .clue-bar #hint {
     flex-grow: 2;
 }
 
-.mini-board .keyboard-controls .mini-keyboard {
+.mini-keyboard .keyboard {
     padding: 16px 12px;
     font-size: 24px;
     overflow: visible;
@@ -355,23 +353,23 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     position: relative;
 }
 
-.mini-board .keyboard-controls .mini-keyboard .keyboard-row {
+.mini-keyboard .keyboard .keyboard-row {
     display: flex;
     min-height: 40px;
 }
 
-.mini-board .keyboard-controls .mini-keyboard .keyboard-row:not(:last-child) {
+.mini-keyboard .keyboard .keyboard-row:not(:last-child) {
     margin-bottom: 12px;
 }
 
-.mini-board .keyboard-controls .mini-keyboard .keyboard-row .key {
+.mini-keyboard .keyboard .keyboard-row .key {
     flex-grow: 1;
     align-items: center;
     background: #fff;
     box-sizing: border-box;
     cursor: pointer;
     display: flex;
-    height: 40px;
+    height: calc(100vh / 16);
     justify-content: center;
     padding: 5px;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -388,34 +386,28 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     margin-right: calc(4px * 1.5);
 }
 
-.mini-board .keyboard-controls .mini-keyboard .keyboard-row .key#change-key,
-.mini-board .keyboard-controls .mini-keyboard .keyboard-row .key#backspace-key {
+.mini-keyboard .keyboard .keyboard-row .key#change-key,
+.mini-keyboard .keyboard .keyboard-row .key#backspace-key {
     background-color: #c9d1d9;
     border-bottom: 1px solid #b3bdc4;
 }
 
-.mini-board .keyboard-controls .mini-keyboard .keyboard-row .key#change-key {
+.mini-keyboard .keyboard .keyboard-row .key#change-key {
     font-size: 14px;
 }
 
 /* Wordle */
 
 .wordle-board {
-    display: flex;
     justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    overflow: hidden;
 }
 
 .wordle-grid {
     display: grid;
     grid-template-rows: repeat(6, 1fr);
     grid-gap: 5px;
-    padding: 10px;
     box-sizing: border-box;
-    width: 350px;
-    height: 420px;
+    width: 100%;
 }
 
 .wordle-row {
@@ -463,7 +455,6 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 }
 
 .wordle-keyboard {
-    height: 224;
     user-select: none;
     padding: 16px 12px;
 }
@@ -481,7 +472,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     border: 0;
     padding: 0;
     margin: 0 calc(4px * 1.5) 0 0;
-    height: 58px;
+    height: calc(100vh / 16);
     border-radius: 4px;
     cursor: pointer;
     -webkit-user-select: none;
@@ -529,7 +520,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     height: calc(2 * 8px + 4 * 22.5vw);
 }
 
-.connections-grid {
+.connections-board .connections-grid {
     position: absolute;
     bottom: 0;
     grid-template-rows: repeat(4, 1fr);
@@ -543,8 +534,9 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     min-width: 0;
 }
 
-.connections-tile {
+.connections-board .connections-grid .connections-tile {
     text-align: center;
+    text-wrap: nowrap;
     font-size: 16px;
     overflow: hidden;
     min-width: 0;
@@ -566,10 +558,9 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     color: #121212;
     z-index: 0;
     container-type: inline-size;
-    font-size: clamp(10px, 3cqi, 16px)
 }
 
-.connections-tile.selected {
+.connections-board .connections-grid .connections-tile.selected {
     background-color: #5a594e;
     color: #f8f8f8;
     z-index: 1;
@@ -601,7 +592,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     color: #f8f8f8;
 }
 
-.connections-solved {
+.connections-board .connections-solved {
     width: calc(2 * 8px + 4 * 22.5vw);
     height: calc(2 * 8px + 4 * 22.5vw);
     gap: 8px;
@@ -615,7 +606,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     margin: 0 auto;
 }
 
-.answer-group {
+.connections-board .connections-solved .answer-group {
     text-align: center;
     text-transform: uppercase;
     display: flex;
@@ -632,27 +623,27 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     line-height: 18px;
 }
 
-.answer-group p {
+.connections-board .connections-solved .answer-group p {
     margin-bottom: 0;
 }
 
-.answer-group .answer-heading {
+.connections-board .connections-solved .answer-group .answer-heading {
     font-weight: 700;
 }
 
-.answer-group#answer-0 {
+.connections-board .connections-solved .answer-group#answer-0 {
     background-color: #f9df6d;
 }
 
-.answer-group#answer-1 {
+.connections-board .connections-solved .answer-group#answer-1 {
     background-color: #a0c35a;
 }
 
-.answer-group#answer-2 {
+.connections-board .connections-solved .answer-group#answer-2 {
     background-color: #b0c4ef;
 }
 
-.answer-group#answer-3 {
+.connections-board .connections-solved .answer-group#answer-3 {
     background-color: #ba81c5;
 }
 
