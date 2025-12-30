@@ -14,7 +14,7 @@ const Status = Object.freeze({
 const DICTIONARY_PATH = "../../assets/txt/dict.txt";
 const NUM_LETTERS_IN_A_WORD = 5;
 const NUM_ROWS = 6;
-const SECRET_WORD = "WATER";
+const SECRET_WORD = "MEOWS";
 var dictionary = {};
 var pastSubmittedWords = [];
 var tileIndex = 0;
@@ -29,6 +29,7 @@ function loadDictionary() {
     .then(data => {
         const itemsArray = data.split('\n').map(item => item.trim()).filter(item => item.length > 0);
         dictionary = new Set(itemsArray);
+        dictionary.push(SECRET_WORD);
         console.log("Loaded dictionary");
     });
 }
@@ -79,14 +80,17 @@ function submitInputWord() {
         pastSubmittedWords.push(matches);
         inputWord = "";
         numMistakesRemaining--;
-        if (numMistakesRemaining == 0) {
+        if (matches.every(item => item == Status.CORRECT)) {
+            // YOU WIN
+            canType = false;
+            console.log("You win!");
+        } else if (numMistakesRemaining == 0) {
             // Game over
             console.log("Game over");
-            canBackspace = false;
         } else {
             canType = true;
-            canBackspace = false;
         }
+        canBackspace = false;
     }
 }
 

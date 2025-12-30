@@ -212,19 +212,18 @@ function goToPrevWord() {
     if (currentWordIndex == -1) currentWordIndex = SECRET_WORDS.length - 1;
     currentIndex = SECRET_WORDS[currentWordIndex].startPosition;
     currentDirection = SECRET_WORDS[currentWordIndex].direction;
-    if (!isCrosswordFilled()) {
-        // If crossword is not filled
-        var nextIndex = isWordNotFilled();
-        while (nextIndex == -1) {
-            // While the current word is filled, go to the previous word
-            currentWordIndex--;
-            if (currentWordIndex == -1) currentWordIndex = SECRET_WORDS.length - 1;
-            currentIndex = SECRET_WORDS[currentWordIndex].startPosition;
-            nextIndex = isWordNotFilled();
-        }
-        currentIndex = nextIndex;
-        currentDirection = SECRET_WORDS[currentWordIndex].direction;
+    var counter = SECRET_WORDS.length - 2;
+    var nextIndex = getNextIndexOfWord();
+    while (counter > 0 && nextIndex == -1) {
+        // While the current word is filled and we have not cycled through all the words, go to the previous word
+        currentWordIndex--;
+        if (currentWordIndex == -1) currentWordIndex = SECRET_WORDS.length - 1;
+        // currentIndex = SECRET_WORDS[currentWordIndex].startPosition;
+        nextIndex = getNextIndexOfWord();
+        counter--;
     }
+    currentIndex = nextIndex;
+    currentDirection = SECRET_WORDS[currentWordIndex].direction;
     highlightTiles();
 }
 
@@ -233,19 +232,18 @@ function goToNextWord() {
     if (currentWordIndex == SECRET_WORDS.length) currentWordIndex = 0;
     currentIndex = SECRET_WORDS[currentWordIndex].startPosition;
     currentDirection = SECRET_WORDS[currentWordIndex].direction;
-    if (!isCrosswordFilled()) {
-        // If crossword is not filled
-        var nextIndex = isWordNotFilled();
-        while (nextIndex == -1) {
-            // While the current word is filled, go to the next word
-            currentWordIndex++;
-            if (currentWordIndex == SECRET_WORDS.length) currentWordIndex = 0;
-            currentIndex = SECRET_WORDS[currentWordIndex].startPosition;
-            nextIndex = isWordNotFilled();
-        }
-        currentIndex = nextIndex;
-        currentDirection = SECRET_WORDS[currentWordIndex].direction;
+    var counter = SECRET_WORDS.length - 2;
+    var nextIndex = getNextIndexOfWord();
+    while (counter > 0 && nextIndex == -1) {
+        // While the current word is filled and we have not cycled through all the words, go to the next word
+        currentWordIndex++;
+        if (currentWordIndex == SECRET_WORDS.length) currentWordIndex = 0;
+        // currentIndex = SECRET_WORDS[currentWordIndex].startPosition;
+        nextIndex = getNextIndexOfWord();
+        counter--;
     }
+    currentIndex = nextIndex;
+    currentDirection = SECRET_WORDS[currentWordIndex].direction;
     highlightTiles();
 }
 
@@ -258,9 +256,12 @@ function moveBackwards() {
 }
 
 function moveForward() {
-    if (currentDirection == Direction.ACROSS) currentIndex++;
-    else currentIndex += 5;
-    var nextIndex = isWordNotFilled();
+    if (isCrosswordFilled() && isAtEndOfWord()) currentIndex = SECRET_WORDS[currentWordIndex].startPosition;
+    else {
+        if (currentDirection == Direction.ACROSS) currentIndex++;
+        else currentIndex += 5;
+    }
+    var nextIndex = getNextIndexOfWord();
     if (nextIndex == -1) goToNextWord();
     else currentIndex = nextIndex;
 }
@@ -310,6 +311,8 @@ function typeInputLetter(element) {
         clonedLetterTextElement.textContent = letter;
         letterTileElement.appendChild(clonedLetterTextElement);
         letterTextElement.remove();
+        // Preserve the current fill state of the crossword
+        var crosswordIsFilled = isCrosswordFilled();
         // Grade the inputted letter
         var i = Math.floor(currentIndex / NUM_ROWS);
         var j = currentIndex % NUM_ROWS;
@@ -318,13 +321,14 @@ function typeInputLetter(element) {
         } else {
             crosswordStatusGrid[i][j] = Status.INCORRECT;
         }
-        if (!isCrosswordFilled()) {
-            // If crosswod is not filled, move forward
-            moveForward();
-        } else if (isCrosswordCorrect()) {
+        if (isCrosswordCorrect()) {
             // YOU WIN
             clearInterval(stopwatchId);
             console.log("You win!");
+        } else if (!crosswordIsFilled && isCrosswordFilled()) {
+            // Do nothing if the crossword was just filled
+        } else {
+            moveForward();
         }
         highlightTiles();
     }
@@ -365,16 +369,25 @@ function isAtBeginningOfWord() {
         || currentDirection == Direction.DOWN && (i - 1 == -1 || SECRET_CROSSWORD[i-1][j].number < 0));
 }
 
+function isAtEndOfWord() {
+    var i = Math.floor(currentIndex / NUM_ROWS);
+    var j = currentIndex % NUM_ROWS;
+    return (currentDirection == Direction.ACROSS && (j + 1 == NUM_COLS || SECRET_CROSSWORD[i][j+1].number < 0)
+        || currentDirection == Direction.DOWN && (i + 1 == NUM_ROWS || SECRET_CROSSWORD[i+1][j].number < 0));
+}
+
 // If word is not filled, return next index; else -1
-function isWordNotFilled() {
-    var currentIndex = SECRET_WORDS[currentWordIndex].startPosition;
-    var currentDirection = SECRET_WORDS[currentWordIndex].direction;
+function getNextIndexOfWord() {
+    var crosswordIsFilled = isCrosswordFilled();
+    if (!crosswordIsFilled) currentIndex = SECRET_WORDS[currentWordIndex].startPosition;
+    currentDirection = SECRET_WORDS[currentWordIndex].direction;
     var i = Math.floor(currentIndex / NUM_ROWS);
     var j = currentIndex % NUM_ROWS;
     if (currentDirection == Direction.ACROSS) {
         var counter = NUM_COLS;
         while (counter > 0) {
-            if (crosswordStatusGrid[i][j] == Status.UNFILLED) {
+            if (crosswordStatusGrid[i][j] == Status.UNFILLED
+                || crosswordIsFilled && crosswordStatusGrid[i][j] != Status.UNOCCUPIED) {
                 return i * NUM_ROWS + j;
             }
             j = (j + 1) % NUM_COLS;
@@ -383,7 +396,8 @@ function isWordNotFilled() {
     } else if (currentDirection == Direction.DOWN) {
         var counter = NUM_ROWS;
         while (counter > 0) {
-            if (crosswordStatusGrid[i][j] == Status.UNFILLED) {
+            if (crosswordStatusGrid[i][j] == Status.UNFILLED
+                || crosswordIsFilled && crosswordStatusGrid[i][j] != Status.UNOCCUPIED) {
                 return i * NUM_ROWS + j;
             }
             i = (i + 1) % NUM_ROWS;
@@ -396,7 +410,7 @@ function isWordNotFilled() {
 function isCrosswordCorrect() {
     for (var i = 0; i < crosswordStatusGrid.length; i++) {
         for (var j = 0; j < crosswordStatusGrid[i].length; j++) {
-            if (crosswordStatusGrid[i][j] == Status.INCORRECT) {
+            if (crosswordStatusGrid[i][j] == Status.UNFILLED || crosswordStatusGrid[i][j] == Status.INCORRECT) {
                 return false;
             }
         }
@@ -407,7 +421,7 @@ function isCrosswordCorrect() {
 function isCrosswordFilled() {
     for (var i = 0; i < crosswordStatusGrid.length; i++) {
         for (var j = 0; j < crosswordStatusGrid[i].length; j++) {
-            if (SECRET_CROSSWORD[i][j].number >= 0 && crosswordStatusGrid[i][j] == Status.UNFILLED) {
+            if (crosswordStatusGrid[i][j] == Status.UNFILLED) {
                 return false;
             }
         }

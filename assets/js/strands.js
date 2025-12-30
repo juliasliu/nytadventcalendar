@@ -173,7 +173,7 @@ function clickLetter(element) {
             drawWordStroke();
             document.getElementById('word-spelled').innerHTML = wordSpelled;
         } else if (wordStatusGrid[i][j] == Status.UNSELECTED) {
-            if (!m && !n || Math.abs(m - i) > 1 || Math.abs(n - j) > 1) {
+            if (Math.abs(m - i) > 1 || Math.abs(n - j) > 1) {
                 // Start new path if the letter is outside of 3x3 radius
                 deselectAll();
             }
