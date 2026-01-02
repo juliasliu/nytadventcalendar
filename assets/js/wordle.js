@@ -22,6 +22,7 @@ var inputWord = "";
 var numMistakesRemaining = NUM_ROWS;
 var canType = true;
 var canBackspace = true;
+var gameWinState = false;
 
 function loadDictionary() {
     const response = fetch(DICTIONARY_PATH)
@@ -38,6 +39,7 @@ function typeInputLetter(element) {
     if (element.srcElement.className == "key" && canType) {
         var inputLetter = element.srcElement.innerText;
         document.getElementById(tileIndex).innerHTML = inputLetter;
+        document.getElementById(tileIndex).classList.add('focused');
         inputWord += inputLetter;
         tileIndex++;
         if (tileIndex % NUM_LETTERS_IN_A_WORD == 0) {
@@ -51,6 +53,7 @@ function backspaceInputLetter() {
     if (tileIndex > 0 && canBackspace) {
         tileIndex--;
         document.getElementById(tileIndex).innerHTML = "";
+        document.getElementById(tileIndex).classList.remove('focused');
         inputWord = inputWord.slice(0, -1);
         if (tileIndex == 0 || tileIndex % NUM_LETTERS_IN_A_WORD != 0) {
             canType = true;
@@ -82,10 +85,20 @@ function submitInputWord() {
         numMistakesRemaining--;
         if (matches.every(item => item == Status.CORRECT)) {
             // YOU WIN
+            document.getElementById('keyboard').style.visibility = "hidden";
+            document.getElementById('view-results-button').style.display = "inline";
+            var resultsModal = new bootstrap.Modal(document.getElementById('resultsModal'));
+            resultsModal.show();
             canType = false;
+            gameWinState = true;
             console.log("You win!");
         } else if (numMistakesRemaining == 0) {
             // Game over
+            document.getElementById('keyboard').style.visibility = "hidden";
+            document.getElementById('view-results-button').style.display = "inline";
+            var resultsModal = new bootstrap.Modal(document.getElementById('resultsModal'));
+            resultsModal.show();
+            canType = false;
             console.log("Game over");
         } else {
             canType = true;
@@ -96,7 +109,23 @@ function submitInputWord() {
 
 function isWordValid() {
     var word = inputWord.toLowerCase();
-    return dictionary.has(word);
+    if (dictionary.length) {
+        return dictionary.has(word);
+    }
+    return true;
+}
+
+function loadResults() {
+    // Load title
+    if (gameWinState) {
+        document.getElementById('game-over').style.display = "none";
+    } else {
+        document.getElementById('congratulations').style.display = "none";
+    }
+    // Load advent progress bar
+    // Load game results stats
+    // Load world distribution bar graph
+    document.getElementById('back-to-home-button').addEventListener('click', goBack);
 }
 
 document.getElementById('back-button').addEventListener('click', goBack);
@@ -106,5 +135,6 @@ Array.from(document.getElementsByClassName('key')).forEach(function(e) {
 });
 document.getElementById('backspace-key').addEventListener('click', backspaceInputLetter);
 document.getElementById('enter-key').addEventListener('click', submitInputWord);
+document.getElementById('resultsModal').addEventListener('shown.bs.modal', loadResults)
 
 loadDictionary();
