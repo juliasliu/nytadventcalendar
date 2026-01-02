@@ -30,7 +30,7 @@ function loadDictionary() {
     .then(data => {
         const itemsArray = data.split('\n').map(item => item.trim()).filter(item => item.length > 0);
         dictionary = new Set(itemsArray);
-        dictionary.push(SECRET_WORD);
+        dictionary.add(SECRET_WORD);
         console.log("Loaded dictionary");
     });
 }
