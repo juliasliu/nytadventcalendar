@@ -1,0 +1,211 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width,initial-scale=1">
+    <meta name=description content="nyt advent calendar">
+    <link rel=icon type="image/png" href="img/logo.png"/>
+    <title>NYT Advent Calendar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Roboto:ital,wght@0,100..900;1,100..900&family=UnifrakturCook:wght@700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="header-container navbar fixed-top navbar-expand-sm">
+        <a class="navbar-brand" href="index.html">
+            <span class="logo nyt-logo-font">J</span>
+            <span class="title heading-font">Games</span>
+        </a>
+    </nav>
+    <div id="fixed-navbar-spacing"></div>
+    <div class="container intro">
+        <div class="ribbon">Welcome to the NYT games advent calendar</div>
+        <h3 id="greetings">Good morning!</h2>
+        <p id="greetings-caption">Happy Holidays 🎁</p>
+        <div class="advent-progress-bar">
+            <div class="progress-bubbles">
+                <div class="progress" role="progressbar" aria-label="advent-progress-bar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar" style="width: 50%"></div>
+                </div>
+                <div class="bubbles">
+                    <div class="bubble">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gift-fill" viewBox="0 0 16 16">
+                                <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A3 3 0 0 1 3 2.506zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43zM9 3h2.932l.023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0zm6 4v7.5a1.5 1.5 0 0 1-1.5 1.5H9V7zM2.5 16A1.5 1.5 0 0 1 1 14.5V7h6v9z"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="bubble">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gift-fill" viewBox="0 0 16 16">
+                                <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A3 3 0 0 1 3 2.506zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43zM9 3h2.932l.023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0zm6 4v7.5a1.5 1.5 0 0 1-1.5 1.5H9V7zM2.5 16A1.5 1.5 0 0 1 1 14.5V7h6v9z"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="bubble">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gift-fill" viewBox="0 0 16 16">
+                                <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A3 3 0 0 1 3 2.506zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43zM9 3h2.932l.023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0zm6 4v7.5a1.5 1.5 0 0 1-1.5 1.5H9V7zM2.5 16A1.5 1.5 0 0 1 1 14.5V7h6v9z"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="bubble">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gift-fill" viewBox="0 0 16 16">
+                                <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A3 3 0 0 1 3 2.506zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43zM9 3h2.932l.023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0zm6 4v7.5a1.5 1.5 0 0 1-1.5 1.5H9V7zM2.5 16A1.5 1.5 0 0 1 1 14.5V7h6v9z"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <div class="bubble">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gift-fill" viewBox="0 0 16 16">
+                                <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A3 3 0 0 1 3 2.506zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43zM9 3h2.932l.023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0zm6 4v7.5a1.5 1.5 0 0 1-1.5 1.5H9V7zM2.5 16A1.5 1.5 0 0 1 1 14.5V7h6v9z"/>
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="days">
+                <div class="day">Day <span id="ereyesterday-number">0</span></div>
+                <div class="day">Day <span id="yesterday-number">0</span></div>
+                <div class="day">Day <span id="today-number">0</span></div>
+                <div class="day"></div>
+                <div class="day">Day <span id="final-number">0</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="container game">
+        <div class="card main-card" id="the-mini-card">
+            <div class="card-body">
+                <div class="card-body-description">
+                    <div>
+                        <h1 class="card-title">The Mini</h1>
+                        <p class="card-text">Solve the puzzle in seconds.</p>
+                    </div>
+                    <img src="https://www.nytimes.com/games-assets/v2/assets/icons/mini.svg"/>
+                </div>
+                <div class="card-links">
+                    <span class="card-link date">Wednesday, Dec 24</span>
+                    <span class="card-link author">By JULIA LIU</span>
+                </div>
+            </div>
+        </div>
+        <div class="card thumbnail-card" id="the-mini-card">
+            <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill text-bg-light">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+                </svg>
+                <span class="visually-hidden">locked</span>
+            </span>
+            <div class="card-body">
+                <div class="card-body-description">
+                    <img src="https://www.nytimes.com/games-assets/v2/assets/icons/mini.svg"/>
+                </div>
+                <span class="card-link date">Thursday</span>
+            </div>
+        </div>
+    </div>
+    <div class="container game">
+        <div class="card main-card" id="wordle-card">
+            <div class="card-body">
+                <div class="card-body-description">
+                    <div>
+                        <h1 class="card-title">Wordle</h1>
+                        <p class="card-text">Guess your way to the correct word.</p>
+                    </div>
+                    <img src="https://www.nytimes.com/games-assets/v2/assets/expansion-games/wordle-card-icon.svg"/>
+                </div>
+                <div class="card-links">
+                    <span class="card-link date">Wednesday, Dec 24</span>
+                    <span class="card-link author">By JULIA LIU</span>
+                </div>
+            </div>
+        </div>
+        <div class="card thumbnail-card" id="wordle-card">
+            <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill text-bg-light">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+                </svg>
+                <span class="visually-hidden">locked</span>
+            </span>
+            <div class="card-body">
+                <div class="card-body-description">
+                    <img src="https://www.nytimes.com/games-assets/v2/assets/expansion-games/wordle-card-icon.svg"/>
+                </div>
+                <span class="card-link date">Thursday</span>
+            </div>
+        </div>
+    </div>
+    <div class="container game">
+        <div class="card main-card" id="connections-card">
+            <div class="card-body">
+                <div class="card-body-description">
+                    <div>
+                        <h1 class="card-title">Connections</h1>
+                        <p class="card-text">Group words that share a common thread.</p>
+                    </div>
+                    <img src="https://www.nytimes.com/games-assets/v2/assets/expansion-games/connections.svg"/>
+                </div>
+                <div class="card-links">
+                    <span class="card-link date">Wednesday, Dec 24</span>
+                    <span class="card-link author">By JULIA LIU</span>
+                </div>
+            </div>
+        </div>
+        <div class="card thumbnail-card" id="connections-card">
+            <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill text-bg-light">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+                </svg>
+                <span class="visually-hidden">locked</span>
+            </span>
+            <div class="card-body">
+                <div class="card-body-description">
+                    <img src="https://www.nytimes.com/games-assets/v2/assets/expansion-games/connections.svg"/>
+                </div>
+                <span class="card-link date">Thursday</span>
+            </div>
+        </div>
+    </div>
+    <div class="container game">
+        <div class="card main-card" id="strands-card">
+            <div class="card-body">
+                <div class="card-body-description">
+                    <div>
+                        <h1 class="card-title">Strands</h1>
+                        <p class="card-text">Find hidden words and uncover the day's theme.</p>
+                    </div>
+                    <img src="https://www.nytimes.com/games-assets/v2/assets/expansion-games/strands.svg"/>
+                </div>
+                <div class="card-links">
+                    <span class="card-link date">Wednesday, Dec 24</span>
+                    <span class="card-link author">By JULIA LIU</span>
+                </div>
+            </div>
+        </div>
+        <div class="card thumbnail-card" id="strands-card">
+            <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill text-bg-light">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+                </svg>
+                <span class="visually-hidden">locked</span>
+            </span>
+            <div class="card-body">
+                <div class="card-body-description">
+                    <img src="https://www.nytimes.com/games-assets/v2/assets/expansion-games/strands.svg"/>
+                </div>
+                <span class="card-link date">Thursday</span>
+            </div>
+        </div>
+    </div>
+    <div class="container outro">
+        <h4>Life is more fun with Games. ✨</h4>
+        <p class="subheading-font">Come back every day for new puzzles.</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/fd1b2e6d82.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>
