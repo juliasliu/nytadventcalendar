@@ -1,11 +1,6 @@
 const ADVENT_DAYS = 12;
 const NUM_EXPIRATION_DAYS = 30;
 const GREETINGS_PATH = "txt/greetings.txt";
-const DATE_FORMAT_OPTIONS = {
-  weekday: 'long', // Full name of the day of the week
-  month: 'short', // Abbreviated month name (e.g., Jan)
-  day: 'numeric'  // Single digit for days 1-9
-};
 
 /* Returns the value of the given cookie name. */
 function getCookie(cname) {
@@ -60,19 +55,27 @@ function loadCookies() {
       // Also delete every game state
       deleteCookie("wordle-game-state");
       deleteCookie("wordle-submitted-words");
+      deleteCookie("strands-submitted-indices");
+      deleteCookie("strands-submitted-word-indices");
     }
-  } else if (day == "") {
+  } else {
     // If the advent calendar is not started, set the day number to 1
     day = 1;
     setCookie("day", 1, NUM_EXPIRATION_DAYS);
     // Also set every game stat to zero
     deleteCookie("wordle-game-state");
     deleteCookie("wordle-submitted-words");
+    deleteCookie("strands-submitted-indices");
+    deleteCookie("strands-submitted-word-indices");
     setCookie("wordle-num-played", 0, NUM_EXPIRATION_DAYS);
     setCookie("wordle-win-percentage", 0, NUM_EXPIRATION_DAYS);
     setCookie("wordle-win-streak", 0, NUM_EXPIRATION_DAYS);
     setCookie("wordle-win-streak-max", 0, NUM_EXPIRATION_DAYS);
     setCookie("wordle-win-distribution", [0,0,0,0,0,0], NUM_EXPIRATION_DAYS);
+    setCookie("strands-num-played", 0, NUM_EXPIRATION_DAYS);
+    setCookie("strands-win-percentage", 0, NUM_EXPIRATION_DAYS);
+    setCookie("strands-win-streak", 0, NUM_EXPIRATION_DAYS);
+    setCookie("strands-win-streak-max", 0, NUM_EXPIRATION_DAYS);
   }
 }
 
@@ -99,7 +102,20 @@ function getDayOfWeek(date) {
 
 /* Returns the day of the week and date of the given date. */
 function getDate(date) {
-  return date.toLocaleDateString('en-US', DATE_FORMAT_OPTIONS);
+  return date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'short',
+    day: 'numeric'
+  });
+}
+
+/* Returns the month, day, and year of the given date. */
+function getFullDate(date) {
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
 }
 
 async function initAdvent() {

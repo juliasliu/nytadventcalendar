@@ -16,8 +16,9 @@ const DICTIONARY_PATH = "../txt/dict.txt";
 const WORDLE_PATH = "../txt/wordle.txt";
 const NUM_LETTERS_IN_A_WORD = 5;
 const NUM_ROWS = 6;
-var secretWord = "HOUSE";
 var dictionary = {};
+/* Wordle solution */
+var secretWord = "HOUSE";
 /* Wordle game variables */
 var tileIndex = 0;
 var inputWord = "";
@@ -73,6 +74,9 @@ function initWord() {
     loadDictionary();
     loadGameState();
     let day = Number(getCookie("day"));
+    let date = getFullDate(new Date(getCookie("date")));
+    document.getElementById('intro-day').innerHTML = day;
+    document.getElementById('intro-date').innerHTML = date;
     let storedGameState = getCookie("wordle-game-state");
     let storedSubmittedWords = getCookie("wordle-submitted-words").split(',');
     if (storedSubmittedWords != "") {
@@ -165,14 +169,14 @@ function submitInputWord() {
 }
 
 function setWinGameState(updateGameStats) {
+    gameWinState = true;
     if (updateGameStats) {
-        gameWinState = true;
         var numWon = winPercentage * numPlayed;
         numPlayed++;
         winPercentage = (numWon + 1) / numPlayed * 100;
         winStreak++;
         winStreakMax = Math.max(winStreakMax, winStreak);
-        pastWinDistribution[NUM_ROWS - numMistakesRemaining]++;
+        pastWinDistribution[NUM_ROWS - numMistakesRemaining - 1]++;
         setCookie("wordle-game-state", gameWinState, NUM_EXPIRATION_DAYS);
         setCookie("wordle-num-played", numPlayed, NUM_EXPIRATION_DAYS);
         setCookie("wordle-win-percentage", winPercentage, NUM_EXPIRATION_DAYS);
@@ -224,7 +228,7 @@ function loadResults() {
     document.getElementById('win-percentage').innerHTML = winPercentage;
     document.getElementById('win-streak').innerHTML = winStreak;
     document.getElementById('win-streak-max').innerHTML = winStreakMax;
-    // Load world distribution bar graph
+    // Load wordle distribution bar graph
     document.getElementById('1-guess').innerHTML = pastWinDistribution[0];
     document.getElementById('1-guess').style.width = "calc(" + Number(5 + pastWinDistribution[0] / numPlayed * 100) + "%)";
     document.getElementById('2-guess').innerHTML = pastWinDistribution[1];

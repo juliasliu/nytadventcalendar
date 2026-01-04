@@ -347,7 +347,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 .container.game-container .game-finished {
     position: absolute;
     top: 0;
-    width: 100vw;
+    width: 100%;
     text-align: center;
 }
 
@@ -902,7 +902,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     color: #f8cd05;
 }
 
-.strands-board .progress-box {
+.strands-board #progress-box {
     display: flex;
     align-items: center;
     width: 324px;
@@ -962,7 +962,8 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     background-color: #aedfee;
 }
 
-.word-search .word-search-grid .letter-tile-button.spangram {
+.word-search .word-search-grid .letter-tile-button.spangram,
+#strands-history div.spangram {
     background-color: #f8cd05;
 }
 
@@ -979,4 +980,21 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 .word-search #stroke-wrapper svg {
     width: 324px;
     height: 422px;
+}
+
+#strands-history {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 4px;
+    grid-row-gap: 4px;
+    width: 136px;
+    margin: auto;
+    padding: 1em 0;
+}
+
+#strands-history div {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    background-color: #3f9ebc;
 }
