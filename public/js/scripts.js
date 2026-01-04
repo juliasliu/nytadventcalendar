@@ -32,6 +32,15 @@ function setCookie(cname, cvalue, exdays) {
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
+/* Removes the given name from the cookie. */
+function deleteCookie(name, path, domain) {
+    // Set an expiration date in the past
+    document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT;" +
+                      // Include path and domain if specified, otherwise default path to '/'
+                      (domain ? "; domain=" + domain : "") +
+                      (path ? "; path=" + path : "; path=/");
+}
+
 function loadCookies() {
   // Check today's date
   let date = getCookie("date");
@@ -44,12 +53,26 @@ function loadCookies() {
                 saved_date.getMonth() === current_date.getMonth() &&
                 saved_date.getDate() === current_date.getDate();
     if (!sameDay) {
-      setCookie("day", ++day, NUM_EXPIRATION_DAYS);
+      // Increase the day number by the difference in the last saved date and today's date
+      const difference = current_date.getDate() - saved_date.getDate;
+      day += difference;
+      setCookie("day", day, NUM_EXPIRATION_DAYS);
+      // Also delete every game state
+      deleteCookie("wordle-game-state");
+      deleteCookie("wordle-submitted-words");
     }
-  } else {
+  } else if (day == "") {
     // If the advent calendar is not started, set the day number to 1
     day = 1;
     setCookie("day", 1, NUM_EXPIRATION_DAYS);
+    // Also set every game stat to zero
+    deleteCookie("wordle-game-state");
+    deleteCookie("wordle-submitted-words");
+    setCookie("wordle-num-played", 0, NUM_EXPIRATION_DAYS);
+    setCookie("wordle-win-percentage", 0, NUM_EXPIRATION_DAYS);
+    setCookie("wordle-win-streak", 0, NUM_EXPIRATION_DAYS);
+    setCookie("wordle-win-streak-max", 0, NUM_EXPIRATION_DAYS);
+    setCookie("wordle-win-distribution", [0,0,0,0,0,0], NUM_EXPIRATION_DAYS);
   }
 }
 
