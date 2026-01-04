@@ -105,12 +105,18 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 }
 
 .advent-progress-bar .progress-bubbles .progress {
-    background-color: #FDECE2;
+    background-color: #f5d5d7;
     border-radius: 10px;
 }
 
 .advent-progress-bar .progress-bubbles .progress .progress-bar {
-    background-color: #AD242D;
+    background: repeating-linear-gradient(
+        45deg,
+        #eda4a8,
+        #eda4a8 10px,
+        #ffffff 10px,
+        #ffffff 20px
+    )
 }
 
 .advent-progress-bar .progress-bubbles .bubbles,
@@ -135,8 +141,8 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 .advent-progress-bar .progress-bubbles .bubbles .bubble span {
     width: 2em;
     height: 2em;
-    background-color: #DD575E;  
-    border: 1px solid #fff;
+    background-color: #c44b51;  
+    border: 2px solid #fff;
     border-radius: 100%;
     display: flex;
     justify-content: center;
@@ -147,12 +153,12 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 .advent-progress-bar .progress-bubbles .bubbles .bubble:nth-child(3) span {
     width: 3em;
     height: 3em;
-    background-color: #AD242D;
+    background-color: #ba0009;
 }
 
 .advent-progress-bar .progress-bubbles .bubbles .bubble:nth-child(4) span,
 .advent-progress-bar .progress-bubbles .bubbles .bubble:nth-child(5) span {
-    background-color: #F5DDCC;
+    background-color: #f5d5d7;
 }
 
 .advent-progress-bar .days {
@@ -170,7 +176,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 
 .advent-progress-bar .days .day:nth-child(4),
 .advent-progress-bar .days .day:nth-child(5) {
-    color: #F5DDCC;
+    color: #f5d5d7;
 }
 
 /* Game cards */
@@ -829,6 +835,11 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 .connections-board .connections-solved .answer-group#answer-3,
 #connections-history div span.answer-3 {
     background-color: #ba81c5;
+}
+
+.toast#one-away {
+    margin: 3em auto;
+    width: fit-content;
 }
 
 #connections-history {

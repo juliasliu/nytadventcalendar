@@ -232,6 +232,12 @@ function submitWords() {
             setWinGameState(true);
         }
     } else {
+        if (bestMatchCategory.diff == 1) {
+            // Show the toast if the answer group is one away
+            var toastElement = document.getElementById("one-away");
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastElement);
+            toastBootstrap.show();
+        }
         numMistakesRemaining--;
         if (numMistakesRemaining < 0) {
             // Game over
