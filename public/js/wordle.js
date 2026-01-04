@@ -1,5 +1,4 @@
 function hideIntroPage() {
-    setCookie("date", new Date(), NUM_EXPIRATION_DAYS);
     document.getElementsByClassName('intro-screen-container')[0].style.display = "none";
 }
 
@@ -74,7 +73,7 @@ function initWord() {
     loadDictionary();
     loadGameState();
     let day = Number(getCookie("day"));
-    let date = getFullDate(new Date(getCookie("date")));
+    let date = getFullDate(new Date());
     document.getElementById('intro-day').innerHTML = day;
     document.getElementById('intro-date').innerHTML = date;
     let storedGameState = getCookie("wordle-game-state");
@@ -252,6 +251,6 @@ Array.from(document.getElementsByClassName('key')).forEach(function(e) {
 });
 document.getElementById('backspace-key').addEventListener('click', backspaceInputLetter);
 document.getElementById('enter-key').addEventListener('click', submitInputWord);
-document.getElementById('resultsModal').addEventListener('shown.bs.modal', loadResults)
+document.getElementById('resultsModal').addEventListener('shown.bs.modal', loadResults);
 
 initWord();

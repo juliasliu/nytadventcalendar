@@ -684,8 +684,8 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 }
 
 .instructions,
-.mistakes-counter,
-.action-buttons {
+#mistakes-counter,
+#action-buttons {
     text-align: center;
 }
 
@@ -700,7 +700,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     height: calc(2 * 8px + 4 * 22.5vw);
 }
 
-.connections-board .connections-grid {
+.connections-board #connections-grid {
     position: absolute;
     bottom: 0;
     grid-template-rows: repeat(4, 1fr);
@@ -714,7 +714,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     min-width: 0;
 }
 
-.connections-board .connections-grid .connections-tile {
+.connections-board #connections-grid .connections-tile {
     text-align: center;
     text-wrap: nowrap;
     font-size: 16px;
@@ -740,34 +740,34 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     container-type: inline-size;
 }
 
-.connections-board .connections-grid .connections-tile.selected {
+.connections-board #connections-grid .connections-tile.selected {
     background-color: #5a594e;
     color: #f8f8f8;
     z-index: 1;
 }
 
-.mistakes-counter {
+#mistakes-counter {
     display: flex;
     justify-content: center;
     align-items: center;
     color: #5a594e;
 }
 
-.mistakes-counter .mistake-bubbles {
+#mistakes-counter .mistake-bubbles {
     display: flex;
     gap: calc(4px * 2.5);
     margin-left: calc(4px * 2.5);
     min-width: 120px;
 }
 
-.mistakes-counter .mistake-bubbles .mistake-bubble {
+#mistakes-counter .mistake-bubbles .mistake-bubble {
     width: 16px;
     height: 16px;
     border-radius: 100%;
     background-color: #5a594e;
 }
 
-.action-buttons #submit-button:enabled {
+#action-buttons #submit-button:enabled {
     background-color: #121212;
     color: #f8f8f8;
 }
@@ -811,20 +811,42 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     font-weight: 700;
 }
 
-.connections-board .connections-solved .answer-group#answer-0 {
+.connections-board .connections-solved .answer-group#answer-0,
+#connections-history div span.answer-0 {
     background-color: #f9df6d;
 }
 
-.connections-board .connections-solved .answer-group#answer-1 {
+.connections-board .connections-solved .answer-group#answer-1,
+#connections-history div span.answer-1 {
     background-color: #a0c35a;
 }
 
-.connections-board .connections-solved .answer-group#answer-2 {
+.connections-board .connections-solved .answer-group#answer-2,
+#connections-history div span.answer-2 {
     background-color: #b0c4ef;
 }
 
-.connections-board .connections-solved .answer-group#answer-3 {
+.connections-board .connections-solved .answer-group#answer-3,
+#connections-history div span.answer-3 {
     background-color: #ba81c5;
+}
+
+#connections-history {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#connections-history div {
+    display: flex;
+}
+
+#connections-history div span {
+    display: inline-flex;
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
 }
 
 /* Strands */

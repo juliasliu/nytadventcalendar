@@ -81,8 +81,7 @@ function loadGameState() {
 function fillSubmittedWords() {
     let submittedIndicesList = getCookie("strands-submitted-indices").split(',').map(item => Number(item));
     var startIndex = 0;
-    for (var i = 0; i < submittedWordIndices.length; i++) {
-        var wordIndex = submittedWordIndices[i];
+    for (var wordIndex of submittedWordIndices) {
         for (var j = 0; j < secretWords[wordIndex].length; j++) {
             var index = submittedIndicesList[startIndex + j];
             clickLetter(index);
@@ -94,9 +93,10 @@ function fillSubmittedWords() {
 }
 
 function initWords() {
+    loadGameState();
     // Read the strands file for the current day
     let day = Number(getCookie("day"));
-    let date = getFullDate(new Date(getCookie("date")));
+    let date = getFullDate(new Date());
     document.getElementById('intro-day').innerHTML = day;
     document.getElementById('intro-date').innerHTML = date;
     let strandsFilePath = STRANDS_DIR_PATH + day + ".txt";
@@ -134,7 +134,7 @@ function initWords() {
         document.getElementById('num-words-found').innerHTML = secretWords.length - numWordsLeft;
 
         submittedWordIndices = getCookie("strands-submitted-word-indices").split(',').filter(item => item.length > 0).map(item => Number(item));
-        if (submittedWordIndices != "") {
+        if (submittedWordIndices.length) {
             // If the game has been started or finished, draw submitted words
             fillSubmittedWords();
             if (submittedWordIndices.length == secretWords.length) {
@@ -299,7 +299,7 @@ function submitWord() {
     }
     if (numWordsLeft == 0) {
         // YOU WIN
-        setWinGameState(true);
+        setWinGameState();
     }
     if (!isWordCorrect) {
         if (wordSpelled.length < MIN_WORD_LENGTH) {
@@ -313,18 +313,21 @@ function submitWord() {
     }
 }
 
-function setWinGameState(updateGameStats) {
-    if (updateGameStats) {
+function setWinGameState() {
+    let storedGameState = getCookie("connections-game-state");
+    if (storedGameState == "") {
+        // If the game was not finished previously today, update the game stats
         var numWon = winPercentage * numPlayed;
         numPlayed++;
         winPercentage = (numWon + 1) / numPlayed * 100;
         winStreak++;
         winStreakMax = Math.max(winStreakMax, winStreak);
-        setCookie("strands-num-played", numPlayed, NUM_EXPIRATION_DAYS);
-        setCookie("strands-win-percentage", winPercentage, NUM_EXPIRATION_DAYS);
-        setCookie("strands-win-streak", winStreak, NUM_EXPIRATION_DAYS);
-        setCookie("strands-win-streak-max", winStreakMax, NUM_EXPIRATION_DAYS);
     }
+    setCookie("strands-game-state", true, NUM_EXPIRATION_DAYS);
+    setCookie("strands-num-played", numPlayed, NUM_EXPIRATION_DAYS);
+    setCookie("strands-win-percentage", winPercentage, NUM_EXPIRATION_DAYS);
+    setCookie("strands-win-streak", winStreak, NUM_EXPIRATION_DAYS);
+    setCookie("strands-win-streak-max", winStreakMax, NUM_EXPIRATION_DAYS);
     document.getElementById('progress-box').style.visibility = "hidden";
     document.getElementById('view-results-button').style.display = "inline";
     var resultsModal = new bootstrap.Modal(document.getElementById('resultsModal'));
@@ -354,6 +357,6 @@ function loadResults() {
 document.getElementById('back-button').addEventListener('click', goBack);
 document.getElementById('play-button').addEventListener('click', hideIntroPage);
 document.getElementById('submit-button').addEventListener('click', submitWord);
-document.getElementById('resultsModal').addEventListener('shown.bs.modal', loadResults)
+document.getElementById('resultsModal').addEventListener('shown.bs.modal', loadResults);
 
 initWords();

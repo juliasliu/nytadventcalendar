@@ -38,35 +38,39 @@ function deleteCookie(name, path, domain) {
 
 function loadCookies() {
   // Check today's date
-  let date = getCookie("date");
-  let day = Number(getCookie("day"));
-  if (date != "") {
-    // If a date is saved, compare today's date with the saved date to see if the day has advanced
-    const saved_date = new Date(date);
+  let startDate = getCookie("start-date");
+  if (startDate != "") {
+    // If the advent calendar is started, compare today's date with the start date to see if the day has advanced
+    const start_date = new Date(startDate);
     const current_date = new Date();
-    const sameDay = saved_date.getFullYear() === current_date.getFullYear() &&
-                saved_date.getMonth() === current_date.getMonth() &&
-                saved_date.getDate() === current_date.getDate();
+    const sameDay = start_date.getFullYear() === current_date.getFullYear() &&
+                start_date.getMonth() === current_date.getMonth() &&
+                start_date.getDate() === current_date.getDate();
     if (!sameDay) {
       // Increase the day number by the difference in the last saved date and today's date
-      const difference = current_date.getDate() - saved_date.getDate;
-      day += difference;
-      setCookie("day", day, NUM_EXPIRATION_DAYS);
+      const difference = current_date.getDate() - start_date.getDate();
+      setCookie("day", difference + 1, NUM_EXPIRATION_DAYS);
       // Also delete every game state
       deleteCookie("wordle-game-state");
       deleteCookie("wordle-submitted-words");
+      deleteCookie("strands-game-state");
       deleteCookie("strands-submitted-indices");
       deleteCookie("strands-submitted-word-indices");
+      deleteCookie("connections-game-state");
+      deleteCookie("connections-submitted-words");
     }
   } else {
     // If the advent calendar is not started, set the day number to 1
-    day = 1;
     setCookie("day", 1, NUM_EXPIRATION_DAYS);
+    setCookie("start-date", new Date(), NUM_EXPIRATION_DAYS);
     // Also set every game stat to zero
     deleteCookie("wordle-game-state");
     deleteCookie("wordle-submitted-words");
+    deleteCookie("strands-game-state");
     deleteCookie("strands-submitted-indices");
     deleteCookie("strands-submitted-word-indices");
+    deleteCookie("connections-game-state");
+    deleteCookie("connections-submitted-words");
     setCookie("wordle-num-played", 0, NUM_EXPIRATION_DAYS);
     setCookie("wordle-win-percentage", 0, NUM_EXPIRATION_DAYS);
     setCookie("wordle-win-streak", 0, NUM_EXPIRATION_DAYS);
@@ -76,6 +80,10 @@ function loadCookies() {
     setCookie("strands-win-percentage", 0, NUM_EXPIRATION_DAYS);
     setCookie("strands-win-streak", 0, NUM_EXPIRATION_DAYS);
     setCookie("strands-win-streak-max", 0, NUM_EXPIRATION_DAYS);
+    setCookie("connections-num-played", 0, NUM_EXPIRATION_DAYS);
+    setCookie("connections-win-percentage", 0, NUM_EXPIRATION_DAYS);
+    setCookie("connections-win-streak", 0, NUM_EXPIRATION_DAYS);
+    setCookie("connections-win-streak-max", 0, NUM_EXPIRATION_DAYS);
   }
 }
 
@@ -140,11 +148,11 @@ async function initAdvent() {
   document.getElementById('yesterday-number').innerHTML = day - 1;
   document.getElementById('today-number').innerHTML = day;
   document.getElementById('final-number').innerHTML = ADVENT_DAYS;
-  if (day < 2) {
+  if (day < 3) {
     document.querySelector('.advent-progress-bar .progress-bubbles .bubbles .bubble:nth-child(1)').style.visibility = "hidden";
     document.querySelector('.advent-progress-bar .days .day:nth-child(1)').style.visibility = "hidden";
   }
-  if (day < 3) {
+  if (day < 2) {
     document.querySelector('.advent-progress-bar .progress-bubbles .bubbles .bubble:nth-child(2)').style.visibility = "hidden";
     document.querySelector('.advent-progress-bar .days .day:nth-child(2)').style.visibility = "hidden";
   }
