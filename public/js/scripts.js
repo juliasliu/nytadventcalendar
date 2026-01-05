@@ -51,6 +51,9 @@ function loadCookies() {
       const difference = current_date.getDate() - start_date.getDate();
       setCookie("day", difference + 1, NUM_EXPIRATION_DAYS);
       // Also delete every game state
+      deleteCookie("mini-game-state");
+      deleteCookie("mini-seconds-passed");
+      deleteCookie("mini-submitted-grid");
       deleteCookie("wordle-game-state");
       deleteCookie("wordle-submitted-words");
       deleteCookie("strands-game-state");
@@ -64,6 +67,9 @@ function loadCookies() {
     setCookie("day", 1, NUM_EXPIRATION_DAYS);
     setCookie("start-date", new Date(), NUM_EXPIRATION_DAYS);
     // Also set every game stat to zero
+    deleteCookie("mini-game-state");
+    deleteCookie("mini-seconds-passed");
+    deleteCookie("mini-submitted-grid");
     deleteCookie("wordle-game-state");
     deleteCookie("wordle-submitted-words");
     deleteCookie("strands-game-state");
@@ -71,6 +77,10 @@ function loadCookies() {
     deleteCookie("strands-submitted-word-indices");
     deleteCookie("connections-game-state");
     deleteCookie("connections-submitted-words");
+    setCookie("mini-num-played", 0, NUM_EXPIRATION_DAYS);
+    setCookie("mini-win-percentage", 0, NUM_EXPIRATION_DAYS);
+    setCookie("mini-win-streak", 0, NUM_EXPIRATION_DAYS);
+    setCookie("mini-win-streak-max", 0, NUM_EXPIRATION_DAYS);
     setCookie("wordle-num-played", 0, NUM_EXPIRATION_DAYS);
     setCookie("wordle-win-percentage", 0, NUM_EXPIRATION_DAYS);
     setCookie("wordle-win-streak", 0, NUM_EXPIRATION_DAYS);

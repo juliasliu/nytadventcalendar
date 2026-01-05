@@ -361,9 +361,19 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     display: none;
 }
 
+/* Pause Modal */
+
+.pause {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Results Modal */
 
-.game-results {
+.game-results,
+.pause {
     text-align: center;
 }
 
