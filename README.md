@@ -3,7 +3,7 @@
 
 Each day of this holiday-themed advent calendar is a gift containing games (designed by yours truly) modeled after four of my personal favorite New York Times Games puzzles: **The Mini**, **Wordle**, **Connections**, and **Strands**.
 
-Go to the [link](https://nytadventcalendar-407sr0itx-juliaslius-projects.vercel.app/) to start playing!
+Go to the [nytadventcalendar.vercel.app](https://nytadventcalendar.vercel.app) to start playing!
 
 ![Home page](public/img/home_page.png)
 
