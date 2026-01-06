@@ -1,0 +1,4 @@
+The four elements:water,earth,fire,air
+Elements with single-letter symbols:hydrogen,oxygen,carbon,iodine
+Names of Roman Gods:neptune,mercury,venus,jupiter
+Obstacles Percy Jackson faces:medusa,chimera,ares,hades

@@ -1,0 +1,4 @@
+Flowers that are also colors:lavender,rose,marigold,violet
+Things found in a grave:tombstone,epitaph,flowers,photos
+American Express credit cards:gold,platinum,blue,green
+Words found in the Mistborn series titles:ascension,alloy,mourning,metal

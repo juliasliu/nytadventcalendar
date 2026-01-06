@@ -1,0 +1,4 @@
+Parts of a book or human body:spine,appendix,back,body
+Vegetables that have seeds:pepper,squash,green bean,tomato
+Homophones that start with K:carrot,colonel,need,nose
+Words containing a segment of Beabadoobee:beautiful,bad,voodoo,beet

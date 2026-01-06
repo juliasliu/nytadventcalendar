@@ -1,0 +1,4 @@
+String instruments:guitar,violin,cello,harp
+Main characters on Broadway:gatsby,orpheus,elphaba,hamilton
+Things that have keys:lock,piano,API,answer
+Green _____:light,flag,thumb,out

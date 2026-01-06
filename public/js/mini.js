@@ -28,14 +28,7 @@ const NUM_ROWS = 5;
 const NUM_COLS = 5;
 /* Mini solution */
 // Words are ordered from sequential order
-var secretWords = [
-    { hint: "___ Poehler", word: "Amy", startPosition: 2, direction: Direction.ACROSS },
-    { hint: "Ron's assistant", word: "April", startPosition: 2, direction: Direction.DOWN },
-    { hint: "An adlib repeated in a rap song", word: "Yeet", startPosition: 4, direction: Direction.DOWN },
-    { hint: "Impulse", word: "Whim", startPosition: 5, direction: Direction.DOWN },
-    { hint: "Lil' Sebastian", word: "Horse", startPosition: 10, direction: Direction.ACROSS },
-    { hint: "\"Skim ___ is just water lying about being ___\"", word: "Milk", startPosition: 20, direction: Direction.ACROSS },
-];
+var secretWords = [];
 /* Mini game variables */
 /** The number represents the number of the word, e.g. 1 to 7.
  *  -1: The space is blank.
@@ -50,43 +43,7 @@ var secretWords = [
  *  I - I - T
  *  M I L K -
  */
-var crosswordGrid = [
-    [
-        { number: -1, acrossIndex: -1, downIndex: -1, letter: ''},
-        { number: -1, acrossIndex: -1, downIndex: -1, letter: ''},
-        { number: 1, acrossIndex: 0, downIndex: 3, letter: 'A'},
-        { number: 0, acrossIndex: 0, downIndex: -1, letter: 'M'},
-        { number: 2, acrossIndex: 0, downIndex: 4, letter: 'Y'},
-    ],
-    [
-        { number: 3, acrossIndex: -1, downIndex: 5, letter: 'W'},
-        { number: -1, acrossIndex: -1, downIndex: -1, letter: ''},
-        { number: 0, acrossIndex: -1, downIndex: 3, letter: 'P'},
-        { number: -1, acrossIndex: -1, downIndex: -1, letter: ''},
-        { number: 0, acrossIndex: -1, downIndex: 4, letter: 'E'},
-    ],
-    [
-        { number: 4, acrossIndex: 1, downIndex: 5, letter: 'H'},
-        { number: 0, acrossIndex: 1, downIndex: -1, letter: 'O'},
-        { number: 0, acrossIndex: 1, downIndex: 3, letter: 'R'},
-        { number: 0, acrossIndex: 1, downIndex: -1, letter: 'S'},
-        { number: 0, acrossIndex: 1, downIndex: 4, letter: 'E'},
-    ],
-    [
-        { number: 0, acrossIndex: -1, downIndex: 5, letter: 'I'},
-        { number: -1, acrossIndex: -1, downIndex: -1, letter: ''},
-        { number: 0, acrossIndex: -1, downIndex: 3, letter: 'I'},
-        { number: -1, acrossIndex: -1, downIndex: -1, letter: ''},
-        { number: 0, acrossIndex: -1, downIndex: 4, letter: 'T'},
-    ],
-    [
-        { number: 5, acrossIndex: 2, downIndex: 5, letter: 'M'},
-        { number: 0, acrossIndex: 2, downIndex: -1, letter: 'I'},
-        { number: 0, acrossIndex: 2, downIndex: 3, letter: 'L'},
-        { number: 0, acrossIndex: 2, downIndex: -1, letter: 'K'},
-        { number: -1, acrossIndex: -1, downIndex: -1, letter: ''},
-    ],
-]
+var crosswordGrid = [];
 var crosswordStatusGrid = [];
 var currentIndex = NUM_ROWS * NUM_COLS;
 var currentWordIndex = 0;
@@ -186,7 +143,6 @@ function initWords() {
     .then(data => {
         const itemsArray = data.split('\n').map(item => item.trim()).filter(item => item.length > 0);
         // Load the secret groups
-        secretWords = [];
         for (var item of itemsArray) {
             var split = item.split(',').map(item => item.trim()).filter(item => item.length > 0);
             var secretWord = {

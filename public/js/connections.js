@@ -18,12 +18,7 @@ const NUM_TOTAL_GROUPS = 4;
 const NUM_MISTAKES_ALLOWED = 4;
 /* Connections solution */
 // Word groups in order of easiest to most difficult
-var secretGroups = [
-    { category: "Words that mean dramatic", words: ["theatrical", "showy", "exaggerated", "riveting"] },
-    { category: "Types of renewable energy", words: ["sun", "wind", "water", "biomass"] },
-    { category: "Lorde album titles", words: ["melodrama", "pure heroine", "virgin", "solar power"] },
-    { category: "Diorama parts", words: ["shoebox", "sand", "paint", "styrofoam"] },
-];
+var secretGroups = [];
 /* Connections game variables */
 var secretGroupsLeft = [];
 // Each entry contains the Status of the word, ordered based on the grid index
@@ -120,7 +115,6 @@ function initWords() {
     .then(response => response.text())
     .then(data => {
         const itemsArray = data.split('\n').map(item => item.trim()).filter(item => item.length > 0);
-        secretGroups = [];
         for (var i = 0; i < NUM_TOTAL_GROUPS; i++) {
             var indexOfSeparator = itemsArray[i].indexOf(':');
             var category = itemsArray[i].slice(0, indexOfSeparator);

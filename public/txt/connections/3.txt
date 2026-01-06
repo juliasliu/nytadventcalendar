@@ -1,0 +1,4 @@
+Sewing tools:spool,bobbin,needle,ruler
+Dabin song titles:alive,hollow,bloom,starbright
+Blue _____:balls,collar,chip,moon
+Types of collars:buttoned,sailor,mandarin,lapel

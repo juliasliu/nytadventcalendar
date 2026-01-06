@@ -17,7 +17,7 @@ const NUM_LETTERS_IN_A_WORD = 5;
 const NUM_ROWS = 6;
 var dictionary = {};
 /* Wordle solution */
-var secretWord = "HOUSE";
+var secretWord = "";
 /* Wordle game variables */
 var tileIndex = 0;
 var inputWord = "";

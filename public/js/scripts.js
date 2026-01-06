@@ -49,6 +49,7 @@ function loadCookies() {
     if (!sameDay) {
       // Increase the day number by the difference in the last saved date and today's date
       const difference = current_date.getDate() - start_date.getDate();
+      deleteCookie("day"); // jic
       setCookie("day", difference + 1, NUM_EXPIRATION_DAYS);
       // Also delete every game state
       deleteCookie("mini-game-state");

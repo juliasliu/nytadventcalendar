@@ -35,26 +35,10 @@ const SPANGRAM_MESSAGE = "SPANGRAM!";
 const TOO_SHORT_MESSAGE = "Too short";
 const NOT_IN_WORD_LIST_MESSAGE = "Not in word list";
 /* Strands solution */
-var riddle = "Super Bowl halftime";
-var theme = "KENDRICKSET";
-var secretWords = [
-    "KENDRICKSET", // 11
-    "SQUABBLEUP", // 10
-    "EUPHORIA", // 8
-    "PEEKABOO", // 8
-    "LUTHER", // 6
-    "TVOFF", // 5
-];
-var secretWordGrid = [
-    ['K', 'E', 'R', 'I', 'S', 'E'],
-    ['S', 'N', 'D', 'C', 'K', 'T'],
-    ['Q', 'F', 'F', 'O', 'V', 'T'],
-    ['P', 'U', 'E', 'U', 'E', 'U'],
-    ['E', 'A', 'L', 'P', 'H', 'P'],
-    ['E', 'B', 'B', 'H', 'E', 'O'],
-    ['K', 'O', 'O', 'T', 'R', 'R'],
-    ['A', 'B', 'L', 'U', 'A', 'I'],
-]
+var riddle = "";
+var theme = "";
+var secretWords = [];
+var secretWordGrid = [];
 /* Strands game variables */
 var wordStatusGrid = [];
 var selectedLetterIndices = [];
@@ -108,6 +92,7 @@ function initWords() {
         secretWords = itemsArray[1].split(',');
         numWordsLeft = secretWords.length
         theme = secretWords[0];
+        secretWordGrid = Array.from({ length: NUM_ROWS }, () => new Array(NUM_COLS).fill(''));
         for (var i = 0; i < NUM_ROWS; i++) {
             var currentRowLetters = itemsArray[2 + i].split('');
             for (var j = 0; j < currentRowLetters.length; j++) {

@@ -1,0 +1,4 @@
+Word palindromes:level,kayak,deed,tenet
+Insects that make noise:cricket,bee,mosquito,beetle
+Ways to kill a bug:trap,squash,drown,spray
+Sports made into 2025 movies:table tennis,martial arts,racing,football
