@@ -1,3 +1,5 @@
+const { start } = require("repl");
+
 const ADVENT_DAYS = 12;
 const NUM_EXPIRATION_DAYS = 30;
 const GREETINGS_PATH = "txt/greetings.txt";
@@ -36,6 +38,13 @@ function deleteCookie(name, path, domain) {
                       (path ? "; path=" + path : "; path=/");
 }
 
+/* Returns true if the two dates are the same. */
+function isSameDay(original_date, new_date) {
+  return original_date.getFullYear() === new_date.getFullYear() &&
+          original_date.getMonth() === new_date.getMonth() &&
+          original_date.getDate() === new_date.getDate()
+}
+
 function loadCookies() {
   // Check today's date
   let startDate = getCookie("start-date");
@@ -43,31 +52,33 @@ function loadCookies() {
     // If the advent calendar is started, compare today's date with the start date to see if the day has advanced
     const start_date = new Date(startDate);
     const current_date = new Date();
-    const sameDay = start_date.getFullYear() === current_date.getFullYear() &&
-                start_date.getMonth() === current_date.getMonth() &&
-                start_date.getDate() === current_date.getDate();
-    if (!sameDay) {
+    if (!isSameDay(start_date, current_date)) {
       // Increase the day number by the difference in the last saved date and today's date
       const difference = current_date.getDate() - start_date.getDate();
       deleteCookie("day"); // jic
       setCookie("day", difference + 1, NUM_EXPIRATION_DAYS);
-      // Also delete every game state
-      deleteCookie("mini-game-state");
-      deleteCookie("mini-seconds-passed");
-      deleteCookie("mini-submitted-grid");
-      deleteCookie("wordle-game-state");
-      deleteCookie("wordle-submitted-words");
-      deleteCookie("strands-game-state");
-      deleteCookie("strands-submitted-indices");
-      deleteCookie("strands-submitted-word-indices");
-      deleteCookie("connections-game-state");
-      deleteCookie("connections-submitted-words");
+      let saved_date = getCookie("date");
+      if (!isSameDay(saved_date, current_date)) {
+        // Also delete every game state if no game has been started today
+        deleteCookie("date");
+        deleteCookie("mini-game-state");
+        deleteCookie("mini-seconds-passed");
+        deleteCookie("mini-submitted-grid");
+        deleteCookie("wordle-game-state");
+        deleteCookie("wordle-submitted-words");
+        deleteCookie("strands-game-state");
+        deleteCookie("strands-submitted-indices");
+        deleteCookie("strands-submitted-word-indices");
+        deleteCookie("connections-game-state");
+        deleteCookie("connections-submitted-words");
+      }
     }
   } else {
     // If the advent calendar is not started, set the day number to 1
     setCookie("day", 1, NUM_EXPIRATION_DAYS);
     setCookie("start-date", new Date(), NUM_EXPIRATION_DAYS);
     // Also set every game stat to zero
+    deleteCookie("date");
     deleteCookie("mini-game-state");
     deleteCookie("mini-seconds-passed");
     deleteCookie("mini-submitted-grid");

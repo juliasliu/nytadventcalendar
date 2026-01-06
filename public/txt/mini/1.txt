@@ -3,4 +3,4 @@ Ron's assistant,APRIL,2,1
 An adlib repeated in a rap song,YEET,4,1
 Impulse,WHIM,5,1
 Lil' Sebastian,HORSE,10,0
-\"Skim ___ is just water lying about being ___\",MILK,20,0
+"Skim ___ is just water lying about being ___",MILK,20,0

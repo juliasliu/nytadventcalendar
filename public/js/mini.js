@@ -1,4 +1,5 @@
 function hideIntroPage() {
+    setCookie("date", new Date(), NUM_EXPIRATION_DAYS);
     document.getElementsByClassName('intro-screen-container')[0].style.display = "none";
     isGameInProgress = true;
     if (!gameWinState) startStopwatch();
