@@ -63,44 +63,13 @@ function fillSubmittedWords() {
     for (var group of submittedWords) {
         if (group.every(item => item == group[0])) {
             // Show the answer group
-            var difficultyIndex = group[0];
-            var answerGroupElement = document.createElement('div');
-            answerGroupElement.id = "answer-" + difficultyIndex;
-            answerGroupElement.className = "answer-group";
-            answerGroupElement.innerHTML =
-                '<p class="answer-heading">' + secretGroups[difficultyIndex].category + '</p>' +
-                '<p>' + secretGroups[difficultyIndex].words.join(", ") + '</p>';
-            document.getElementsByClassName('connections-solved')[0].appendChild(answerGroupElement);
-            secretGroupsLeft.splice(difficultyIndex, 1);
-            numRowsLeft--;
+            showAnswerGroup(group[0]);
         }
     }
     document.getElementById('connections-grid').style.gridTemplateRows = "repeat(" + numRowsLeft + ", 1fr)";
     document.getElementById('connections-grid').style.height = "calc(" + NUM_TOTAL_GROUPS * (numRowsLeft - 1) + "px + " + numRowsLeft + " * 22.5vw)";
     // Proceed to fill the rest of the words in the grid
-    for (var i = 0; i < secretGroupsLeft.length; i++) {
-        for (var word of secretGroupsLeft[i].words) {
-            var randomIndex = Math.floor(Math.random() * NUM_TOTAL_WORDS);
-            while (wordStatusList[randomIndex]) {
-                randomIndex = Math.floor(Math.random() * NUM_TOTAL_WORDS);
-            }
-            wordStatusList[randomIndex] = { "word": word, "status": Status.UNSELECTED };
-        }
-    }
-    for (var index = 0; index < wordStatusList.length; index++) {
-        if (wordStatusList[index]) {
-            var tileElement = document.createElement("div");
-            tileElement.className = "connections-tile";
-            tileElement.id = index;
-            tileElement.innerHTML = wordStatusList[index].word;
-            tileElement.style.fontSize = "calc(22.5vw / " + Math.max(8, word.length) + " + 2px)";
-            var gridElement = document.getElementById("connections-grid");
-            gridElement.appendChild(tileElement);
-        }
-    }
-    Array.from(document.getElementsByClassName('connections-tile')).forEach(function(e) {
-        addEventListener('click', clickWord);
-    });
+    shuffleWords();
     console.log(wordStatusList);
 }
 
@@ -173,7 +142,35 @@ function clickWord(element) {
 }
 
 function shuffleWords() {
-
+    // First reset the grid by removing all the existing tiles
+    wordStatusList = [];
+    Array.from(document.getElementsByClassName('connections-tile')).forEach(function(e) {
+        e.remove();
+    });
+    // Then randomize the index of each word into a tile
+    for (var i = 0; i < secretGroupsLeft.length; i++) {
+        for (var word of secretGroupsLeft[i].words) {
+            var randomIndex = Math.floor(Math.random() * NUM_TOTAL_WORDS);
+            while (wordStatusList[randomIndex]) {
+                randomIndex = Math.floor(Math.random() * NUM_TOTAL_WORDS);
+            }
+            wordStatusList[randomIndex] = { "word": word, "status": Status.UNSELECTED };
+        }
+    }
+    for (var index = 0; index < wordStatusList.length; index++) {
+        if (wordStatusList[index]) {
+            var tileElement = document.createElement("div");
+            tileElement.className = "connections-tile";
+            tileElement.id = index;
+            tileElement.innerHTML = wordStatusList[index].word;
+            tileElement.style.fontSize = "calc(22.5vw / " + Math.max(8, word.length) + " + 2px)";
+            var gridElement = document.getElementById("connections-grid");
+            gridElement.appendChild(tileElement);
+        }
+    }
+    Array.from(document.getElementsByClassName('connections-tile')).forEach(function(e) {
+        addEventListener('click', clickWord);
+    });
 }
 
 function deselectAllWords() {
@@ -186,13 +183,25 @@ function deselectAllWords() {
     document.getElementById('submit-button').disabled = true;
 }
 
+function showAnswerGroup(difficultyIndex) {
+    var answerGroupElement = document.createElement('div');
+    answerGroupElement.id = "answer-" + difficultyIndex;
+    answerGroupElement.className = "answer-group";
+    answerGroupElement.innerHTML =
+        '<p class="answer-heading">' + secretGroups[difficultyIndex].category + '</p>' +
+        '<p>' + secretGroups[difficultyIndex].words.join(", ") + '</p>';
+    document.getElementsByClassName('connections-solved')[0].appendChild(answerGroupElement);
+    secretGroupsLeft.splice(difficultyIndex, 1);
+    numRowsLeft--;
+}
+
 function submitWords() {
     // Finds the closest category that matches the group of selected words
-    var bestMatchCategory = { category: "", words: [], diff: 0 };
-    for (var category of secretGroups) {
-        var diff = category.words.filter(item => !selectedWords.includes(item));
-        if (!bestMatchCategory.category || diff.length < bestMatchCategory.diff) {
-            bestMatchCategory = { category: category.category, words: category.words, diff: diff.length };
+    var bestMatchCategory = { difficultyIndex: -1, diff: 0 };
+    for (var index = 0; index < secretGroups.length; index++) {
+        var diff = secretGroups[index].words.filter(item => !selectedWords.includes(item));
+        if (bestMatchCategory.difficultyIndex == -1 || diff.length < bestMatchCategory.diff) {
+            bestMatchCategory = { difficultyIndex: index, diff: diff.length };
         }
     }
     console.log(bestMatchCategory);
@@ -202,23 +211,14 @@ function submitWords() {
     setCookie("connections-submitted-words", submittedWords);
     document.getElementById('submit-button').disabled = true;
     if (bestMatchCategory.diff == 0) {
-        // If the group of selected words is correct
-        // Show the answer group
-        var difficultyIndex = secretGroups.findIndex(item => item.category == bestMatchCategory.category);
-        var answerGroupElement = document.createElement('div');
-        answerGroupElement.id = "answer-" + difficultyIndex;
-        answerGroupElement.className = "answer-group";
-        answerGroupElement.innerHTML =
-            '<p class="answer-heading">' + bestMatchCategory.category + '</p>' +
-            '<p>' + bestMatchCategory.words.join(", ") + '</p>';
-        document.getElementsByClassName('connections-solved')[0].appendChild(answerGroupElement);
+        // If the group of selected words is correct, show the answer group
+        showAnswerGroup(bestMatchCategory.difficultyIndex);
         // Remove selected tiles
         Array.from(document.getElementsByClassName('selected')).forEach(function(element) {
             element.remove();
             wordStatusList[element.id].status = Status.CORRECT;
         });
         selectedWords = [];
-        numRowsLeft--;
         document.getElementById('deselect-button').disabled = true;
         document.getElementById('connections-grid').style.gridTemplateRows = "repeat(" + numRowsLeft + ", 1fr)";
         document.getElementById('connections-grid').style.height = "calc(" + NUM_TOTAL_GROUPS * (numRowsLeft - 1) + "px + " + numRowsLeft + " * 22.5vw)";

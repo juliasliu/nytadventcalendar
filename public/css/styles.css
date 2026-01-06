@@ -568,7 +568,7 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     justify-content: center;
 }
 
-.wordle-grid {
+.wordle-board .wordle-grid {
     display: grid;
     grid-template-rows: repeat(6, 1fr);
     grid-gap: 5px;
@@ -576,13 +576,13 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     width: 100%;
 }
 
-.wordle-row {
+.wordle-board .wordle-grid .wordle-row {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 5px;
 }
 
-.wordle-tile {
+.wordle-board .wordle-grid .wordle-row .wordle-tile {
     width: 100%;
     display: inline-flex;
     justify-content: center;
@@ -596,29 +596,33 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     border: 2px solid #d3d6da;
 }
 
-.wordle-tile.focused {
+.wordle-board .wordle-grid .wordle-row .wordle-tile.focused {
     border: 2px solid #878a8c;
 }
 
-.wordle-tile.correct {
+.wordle-board .wordle-grid .wordle-row .wordle-tile.correct,
+.wordle-keyboard .keyboard-row .key.correct,
+.wordle-keyboard .keyboard-row .key.present.correct {
     background-color: #6aaa64;
     color: #fff;
     border: none;
 }
 
-.wordle-tile.present {
+.wordle-board .wordle-grid .wordle-row .wordle-tile.present,
+.wordle-keyboard .keyboard-row .key.present {
     background-color: #c9b458;
     color: #fff;
     border: none;
 }
 
-.wordle-tile.absent {
+.wordle-board .wordle-grid .wordle-row .wordle-tile.absent,
+.wordle-keyboard .keyboard-row .key.absent {
     background-color: #787c7e;
     color: #fff;
     border: none;
 }
 
-.wordle-tile::before {
+.wordle-board .wordle-grid .wordle-row .wordle-tile::before {
     content: "";
     display: inline-block;
     padding-bottom: 100%;

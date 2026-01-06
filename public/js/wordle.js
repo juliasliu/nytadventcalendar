@@ -77,33 +77,34 @@ function initWord() {
     let date = getFullDate(new Date());
     document.getElementById('intro-day').innerHTML = day;
     document.getElementById('intro-date').innerHTML = date;
-    let storedGameState = getCookie("wordle-game-state");
-    let storedSubmittedWords = getCookie("wordle-submitted-words").split(',');
-    if (storedSubmittedWords != "") {
-        // If the game has been started or finished, fill in submitted words
-        fillSubmittedWords();
-    }
-    if (storedGameState != "") {
-        // If today's game has been finished, show the game results modal
-        hideIntroPage();
-        if (JSON.parse(storedGameState)) {
-            setWinGameState();
-        } else {
-            setLoseGameState();
+    // Read the wordle.txt file
+    const response = fetch(WORDLE_PATH)
+    .then(response => response.text())
+    .then(data => {
+        const itemsArray = data.split('\n').map(item => item.trim()).filter(item => item.length > 0);
+        secretWord = itemsArray[day - 1];
+        let storedGameState = getCookie("wordle-game-state");
+        let storedSubmittedWords = getCookie("wordle-submitted-words").split(',');
+        if (storedSubmittedWords != "") {
+            // If the game has been started or finished, fill in submitted words
+            fillSubmittedWords();
         }
-    } else {
-        // Read the wordle.txt file
-        const response = fetch(WORDLE_PATH)
-        .then(response => response.text())
-        .then(data => {
-            const itemsArray = data.split('\n').map(item => item.trim()).filter(item => item.length > 0);
-            secretWord = itemsArray[day - 1];
-        });
-    }
+        if (storedGameState != "") {
+            // If today's game has been finished, show the game results modal
+            hideIntroPage();
+            if (JSON.parse(storedGameState)) {
+                setWinGameState();
+            } else {
+                setLoseGameState();
+            }
+        }
+    });
 }
 
 function typeInputLetter(element) {
-    if (element.srcElement.className == "key" && canType) {
+    if (element.srcElement.classList.contains("key") 
+        && !element.srcElement.classList.contains("one-and-a-half-key") 
+        && canType) {
         var inputLetter = element.srcElement.innerText;
         document.getElementById(tileIndex).innerHTML = inputLetter;
         document.getElementById(tileIndex).classList.add('focused');
@@ -131,14 +132,18 @@ function backspaceInputLetter() {
 }
 
 function gradeTile(letterIndex, tileIndex) {
+    var letter = inputWord[letterIndex];
     if (inputWord[letterIndex] == secretWord[letterIndex]) {
         document.getElementById(tileIndex).classList.add("correct");
+        document.getElementById(letter).classList.add("correct");
         return Status.CORRECT;
     } else if (secretWord.includes(inputWord[letterIndex])) {
         document.getElementById(tileIndex).classList.add("present");
+        document.getElementById(letter).classList.add("present");
         return Status.PRESENT;
     } else {
         document.getElementById(tileIndex).classList.add("absent");
+        document.getElementById(letter).classList.add("absent");
         return Status.ABSENT;
     }
 }
