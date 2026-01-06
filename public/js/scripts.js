@@ -1,5 +1,3 @@
-const { start } = require("repl");
-
 const ADVENT_DAYS = 12;
 const NUM_EXPIRATION_DAYS = 30;
 const GREETINGS_PATH = "txt/greetings.txt";
