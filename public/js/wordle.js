@@ -176,7 +176,7 @@ function submitInputWord() {
 function setWinGameState(updateGameStats) {
     gameWinState = true;
     if (updateGameStats) {
-        var numWon = winPercentage * numPlayed;
+        var numWon = winPercentage / 100 * numPlayed;
         numPlayed++;
         winPercentage = (numWon + 1) / numPlayed * 100;
         winStreak++;
@@ -199,7 +199,7 @@ function setWinGameState(updateGameStats) {
 
 function setLoseGameState(updateGameStats) {
     if (updateGameStats) {
-        var numWon = winPercentage * numPlayed;
+        var numWon = winPercentage / 100 * numPlayed;
         numPlayed++;
         winPercentage = (numWon) / numPlayed * 100;
         winStreak = 0;

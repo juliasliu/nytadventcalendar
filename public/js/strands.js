@@ -302,7 +302,7 @@ function setWinGameState() {
     let storedGameState = getCookie("connections-game-state");
     if (storedGameState == "") {
         // If the game was not finished previously today, update the game stats
-        var numWon = winPercentage * numPlayed;
+        var numWon = winPercentage / 100 * numPlayed;
         numPlayed++;
         winPercentage = (numWon + 1) / numPlayed * 100;
         winStreak++;

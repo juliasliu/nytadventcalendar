@@ -25,8 +25,8 @@ const GRID_STROKE_WIDTH = 3;
 const TILE_NUMBER_FONT_SIZE = 32;
 const TILE_TEXT_FONT_SIZE = 64;
 const SVG_NS = 'http://www.w3.org/2000/svg';
-const NUM_ROWS = 5;
-const NUM_COLS = 5;
+// 5x5, for example
+var GRID_SIZE = 5;
 /* Mini solution */
 // Words are ordered from sequential order
 var secretWords = [];
@@ -46,7 +46,7 @@ var secretWords = [];
  */
 var crosswordGrid = [];
 var crosswordStatusGrid = [];
-var currentIndex = NUM_ROWS * NUM_COLS;
+var currentIndex = GRID_SIZE * GRID_SIZE;
 var currentWordIndex = 0;
 var currentDirection = Direction.ACROSS;
 var isGameInProgress = false;
@@ -71,11 +71,45 @@ function loadGameState() {
 }
 
 function fillSubmittedWords() {
+    // Draw the grid for the given grid size
+    var svgElement = document.createElementNS(SVG_NS, 'svg');
+    svgElement.setAttribute("class", "crossword");
+    svgElement.setAttribute("viewBox", "0 0 " + Number(GRID_SIZE * CELL_SIZE + 6) + " " + Number(GRID_SIZE * CELL_SIZE + 6));
+    var cellsElement = document.createElementNS(SVG_NS, 'g');
+    cellsElement.setAttribute("data-group", "cells");
+    cellsElement.setAttribute("role", "table");
+    cellsElement.setAttribute("id", "cells");
+    var gridElement = document.createElementNS(SVG_NS, 'g');
+    gridElement.setAttribute("data-group", "grid");
+    var pathElement = document.createElementNS(SVG_NS, 'path');
+    var dValue = "";
+    for (var i = 0; i < GRID_SIZE; i++) {
+        dValue += "M3.00," + Number(CELL_SIZE * (i + 1) + 3) + " l" + Number(CELL_SIZE * GRID_SIZE) + ",0.00 ";
+    }
+    for (var i = 0; i < GRID_SIZE; i++) {
+        dValue += "M" + Number(CELL_SIZE * (i + 1) + 3) + ",3.00 l0.00," + Number(CELL_SIZE * GRID_SIZE) + " ";
+    }
+    pathElement.setAttribute("d", dValue);
+    pathElement.setAttribute("stroke", "dimgray");
+    pathElement.setAttribute("vector-effect", "non-scaling-stroke");
+    var rectElement = document.createElementNS(SVG_NS, 'rect');
+    rectElement.setAttribute("x", 1.50);
+    rectElement.setAttribute("y", 1.50);
+    rectElement.setAttribute("width", Number(CELL_SIZE * GRID_SIZE));
+    rectElement.setAttribute("height", Number(CELL_SIZE * GRID_SIZE));
+    rectElement.setAttribute("stroke", "black");
+    rectElement.setAttribute("stroke-width", 3.00);
+    rectElement.setAttribute("fill", "none");
+    gridElement.appendChild(pathElement);
+    gridElement.appendChild(rectElement);
+    svgElement.appendChild(cellsElement);
+    svgElement.appendChild(gridElement);
+    document.getElementById('puzzle').appendChild(svgElement);
     // Fill in the crossword status grid based on the crossword grid
-    crosswordStatusGrid = Array.from({ length: NUM_ROWS }, () => new Array(NUM_COLS).fill(Status.UNOCCUPIED));
-    for (var i = 0; i < NUM_ROWS; i++) {
-        for (var j = 0; j < NUM_COLS; j++) {
-            var index = i * NUM_ROWS + j;
+    crosswordStatusGrid = Array.from({ length: GRID_SIZE }, () => new Array(GRID_SIZE).fill(Status.UNOCCUPIED));
+    for (var i = 0; i < GRID_SIZE; i++) {
+        for (var j = 0; j < GRID_SIZE; j++) {
+            var index = i * GRID_SIZE + j;
             var letterTileElement = document.createElementNS(SVG_NS, 'g');
             letterTileElement.setAttribute('class', 'letter-cell');
             letterTileElement.setAttribute('id', index);
@@ -143,9 +177,11 @@ function initWords() {
     .then(response => response.text())
     .then(data => {
         const itemsArray = data.split('\n').map(item => item.trim()).filter(item => item.length > 0);
+        // The first line denotes the grid size, e.g. 5 means 5x5 grid
+        GRID_SIZE = Number(itemsArray.splice(0, 1));
         // Load the secret groups
         for (var item of itemsArray) {
-            var split = item.split(',').map(item => item.trim()).filter(item => item.length > 0);
+            var split = item.split('|').map(item => item.trim()).filter(item => item.length > 0);
             var secretWord = {
                 hint: split[0],
                 word: split[1],
@@ -156,16 +192,16 @@ function initWords() {
         }
         // Load the crossword grid based on the secret groups
         crosswordGrid = Array.from(
-            { length: NUM_ROWS }, 
+            { length: GRID_SIZE }, 
             () => Array.from(
-                {length: NUM_COLS}, () => ({ number: -1, acrossIndex: -1, downIndex: -1, letter: '' })
+                {length: GRID_SIZE}, () => ({ number: -1, acrossIndex: -1, downIndex: -1, letter: '' })
             )
         );
         var wordNumber = 1;
         for (var wordIndex = 0; wordIndex < secretWords.length; wordIndex++) {
             var secretWord = secretWords[wordIndex];
-            var i = Math.floor(secretWord.startPosition / NUM_ROWS);
-            var j = secretWord.startPosition % NUM_ROWS;
+            var i = Math.floor(secretWord.startPosition / GRID_SIZE);
+            var j = secretWord.startPosition % GRID_SIZE;
             if (secretWord.direction == Direction.ACROSS) {
                 for (var counter = 0; counter < secretWord.word.length; counter++) {
                     if (counter == 0 && crosswordGrid[i][j + counter].number < 1) {
@@ -241,16 +277,16 @@ function pauseStopwatch() {
 }
 
 function highlightTiles() {
-    var i = Math.floor(currentIndex / NUM_ROWS);
-    var j = currentIndex % NUM_ROWS;
+    var i = Math.floor(currentIndex / GRID_SIZE);
+    var j = currentIndex % GRID_SIZE;
     var m;
     var n;
     var index;
     // Clear all tiles first
-    for (m = 0; m < NUM_ROWS; m++) {
-        for (n = 0; n < NUM_COLS; n++) {
+    for (m = 0; m < GRID_SIZE; m++) {
+        for (n = 0; n < GRID_SIZE; n++) {
             if (crosswordGrid[m][n].number >= 0) {
-                index = m * NUM_ROWS + n;
+                index = m * GRID_SIZE + n;
                 var letterRectElement = document.getElementById('cell-' + index);
                 letterRectElement.setAttribute('class', 'cell-unfilled');
             }
@@ -259,18 +295,18 @@ function highlightTiles() {
     // Then select and highlight tiles
     var letterRectElement;
     if (currentDirection == Direction.ACROSS) {
-        for (n = 0; n < NUM_COLS; n++) {
+        for (n = 0; n < GRID_SIZE; n++) {
             if (crosswordGrid[i][n].number >= 0) {
-                index = i * NUM_ROWS + n;
+                index = i * GRID_SIZE + n;
                 letterRectElement = document.getElementById('cell-' + index);
                 letterRectElement.setAttribute('class', 'cell-highlighted');
             }
         }
         document.getElementById('hint').innerHTML = secretWords[crosswordGrid[i][j].acrossIndex].hint;
     } else if (currentDirection == Direction.DOWN) {
-        for (m = 0; m < NUM_ROWS; m++) {
+        for (m = 0; m < GRID_SIZE; m++) {
             if (crosswordGrid[m][j].number >= 0) {
-                index = m * NUM_ROWS + j;
+                index = m * GRID_SIZE + j;
                 letterRectElement = document.getElementById('cell-' + index);
                 letterRectElement.setAttribute('class', 'cell-highlighted');
             }
@@ -283,8 +319,8 @@ function highlightTiles() {
 
 function deleteCurrentLetter() {
     var letterTextElement = document.getElementById('letter-' + currentIndex);
-    var i = Math.floor(currentIndex / NUM_ROWS);
-    var j = currentIndex % NUM_ROWS;
+    var i = Math.floor(currentIndex / GRID_SIZE);
+    var j = currentIndex % GRID_SIZE;
     letterTextElement.textContent = '';
     crosswordStatusGrid[i][j] = Status.UNFILLED;
 }
@@ -359,16 +395,16 @@ function clickTile(element) {
         index = Number(element.srcElement.ariaLabel);
     }
     if (index + 1) {
-        var i = Math.floor(index / NUM_ROWS);
-        var j = index % NUM_ROWS;
+        var i = Math.floor(index / GRID_SIZE);
+        var j = index % GRID_SIZE;
         if (index != currentIndex && crosswordGrid[i][j].number >= 0) {
             currentIndex = index;
         } else if (index == currentIndex && crosswordGrid[i][j].number >= 0) {
             currentDirection = !currentDirection;
         }
         // If the current selected word does not have the same direction as the current direction, flip
-        i = Math.floor(currentIndex / NUM_ROWS);
-        j = currentIndex % NUM_ROWS;
+        i = Math.floor(currentIndex / GRID_SIZE);
+        j = currentIndex % GRID_SIZE;
         if (currentDirection == Direction.ACROSS && crosswordGrid[i][j].acrossIndex < 0
             || currentDirection == Direction.DOWN && crosswordGrid[i][j].downIndex < 0) {
             currentDirection = !currentDirection;
@@ -395,8 +431,8 @@ function insertLetterTile(letter) {
 
 function gradeTile(letter) {
     // Grade the inputted letter
-    var i = Math.floor(currentIndex / NUM_ROWS);
-    var j = currentIndex % NUM_ROWS;
+    var i = Math.floor(currentIndex / GRID_SIZE);
+    var j = currentIndex % GRID_SIZE;
     if (letter == crosswordGrid[i][j].letter) {
         crosswordStatusGrid[i][j] = Status.CORRECT;
     } else {
@@ -427,8 +463,8 @@ function typeInputLetter(element) {
 }
 
 function backspace() {
-    var i = Math.floor(currentIndex / NUM_ROWS);
-    var j = currentIndex % NUM_ROWS;
+    var i = Math.floor(currentIndex / GRID_SIZE);
+    var j = currentIndex % GRID_SIZE;
     if (crosswordStatusGrid[i][j] == Status.UNFILLED) {
         // If tile is unfilled
         if (isAtBeginningOfWord()) {
@@ -455,17 +491,17 @@ function backspace() {
 }
 
 function isAtBeginningOfWord() {
-    var i = Math.floor(currentIndex / NUM_ROWS);
-    var j = currentIndex % NUM_ROWS;
+    var i = Math.floor(currentIndex / GRID_SIZE);
+    var j = currentIndex % GRID_SIZE;
     return (currentDirection == Direction.ACROSS && (j - 1 == -1 || crosswordGrid[i][j-1].number < 0)
         || currentDirection == Direction.DOWN && (i - 1 == -1 || crosswordGrid[i-1][j].number < 0));
 }
 
 function isAtEndOfWord() {
-    var i = Math.floor(currentIndex / NUM_ROWS);
-    var j = currentIndex % NUM_ROWS;
-    return (currentDirection == Direction.ACROSS && (j + 1 == NUM_COLS || crosswordGrid[i][j+1].number < 0)
-        || currentDirection == Direction.DOWN && (i + 1 == NUM_ROWS || crosswordGrid[i+1][j].number < 0));
+    var i = Math.floor(currentIndex / GRID_SIZE);
+    var j = currentIndex % GRID_SIZE;
+    return (currentDirection == Direction.ACROSS && (j + 1 == GRID_SIZE || crosswordGrid[i][j+1].number < 0)
+        || currentDirection == Direction.DOWN && (i + 1 == GRID_SIZE || crosswordGrid[i+1][j].number < 0));
 }
 
 // If word is not filled, return next index; else -1
@@ -473,26 +509,26 @@ function getNextIndexOfWord() {
     var crosswordIsFilled = isCrosswordFilled();
     if (!crosswordIsFilled) currentIndex = secretWords[currentWordIndex].startPosition;
     currentDirection = secretWords[currentWordIndex].direction;
-    var i = Math.floor(currentIndex / NUM_ROWS);
-    var j = currentIndex % NUM_ROWS;
+    var i = Math.floor(currentIndex / GRID_SIZE);
+    var j = currentIndex % GRID_SIZE;
     if (currentDirection == Direction.ACROSS) {
-        var counter = NUM_COLS;
+        var counter = GRID_SIZE;
         while (counter > 0) {
             if (crosswordStatusGrid[i][j] == Status.UNFILLED
                 || crosswordIsFilled && crosswordStatusGrid[i][j] != Status.UNOCCUPIED) {
-                return i * NUM_ROWS + j;
+                return i * GRID_SIZE + j;
             }
-            j = (j + 1) % NUM_COLS;
+            j = (j + 1) % GRID_SIZE;
             counter--;
         }
     } else if (currentDirection == Direction.DOWN) {
-        var counter = NUM_ROWS;
+        var counter = GRID_SIZE;
         while (counter > 0) {
             if (crosswordStatusGrid[i][j] == Status.UNFILLED
                 || crosswordIsFilled && crosswordStatusGrid[i][j] != Status.UNOCCUPIED) {
-                return i * NUM_ROWS + j;
+                return i * GRID_SIZE + j;
             }
-            i = (i + 1) % NUM_ROWS;
+            i = (i + 1) % GRID_SIZE;
             counter--;
         }
     }
@@ -525,7 +561,7 @@ function setWinGameState(updateGameStats) {
     clearInterval(stopwatchId);
     gameWinState = true;
     if (updateGameStats) {
-        var numWon = winPercentage * numPlayed;
+        var numWon = winPercentage / 100 * numPlayed;
         numPlayed++;
         winPercentage = (numWon + 1) / numPlayed * 100;
         winStreak++;

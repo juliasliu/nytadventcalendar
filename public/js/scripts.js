@@ -55,7 +55,7 @@ function loadCookies() {
       const difference = current_date.getDate() - start_date.getDate();
       deleteCookie("day"); // jic
       setCookie("day", difference + 1, NUM_EXPIRATION_DAYS);
-      let saved_date = getCookie("date");
+      let saved_date = new Date(getCookie("date"));
       if (!isSameDay(saved_date, current_date)) {
         // Also delete every game state if no game has been started today
         deleteCookie("date");

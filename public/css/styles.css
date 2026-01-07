@@ -445,29 +445,29 @@ h1, h2, h3, h4, h5, h6, .heading-font {
     overflow: hidden;
 }
 
-.mini-board .puzzle {
+.mini-board #puzzle {
     width: 100%;
 }
 
-.mini-board .puzzle .crossword {
+.mini-board #puzzle .crossword {
     display: block;
     user-select: none;
     width: 100%;
 }
 
-.mini-board .puzzle .crossword .cell {
+.mini-board #puzzle .crossword .cell {
     fill: #000;
 }
 
-.mini-board .puzzle .crossword .cell-unfilled {
+.mini-board #puzzle .crossword .cell-unfilled {
     fill: #fff;
 }
 
-.mini-board .puzzle .crossword .cell-highlighted {
+.mini-board #puzzle .crossword .cell-highlighted {
     fill: #a7d8ff;
 }
 
-.mini-board .puzzle .crossword .cell-selected {
+.mini-board #puzzle .crossword .cell-selected {
     fill: #ffda00;
 }
 
