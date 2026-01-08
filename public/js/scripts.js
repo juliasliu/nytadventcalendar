@@ -1,6 +1,12 @@
 const ADVENT_DAYS = 12;
 const NUM_EXPIRATION_DAYS = 30;
 const GREETINGS_PATH = "txt/greetings.txt";
+const GAME_CARDS = [
+  { id: 'the-mini', image: "/img/mini.svg" },
+  { id: 'wordle', image: "/img/wordle.svg" },
+  { id: 'connections', image: "/img/connections.svg" },
+  { id: 'strands', image: "/img/strands.svg" },
+];
 
 /* Returns the value of the given cookie name. */
 function getCookie(cname) {
@@ -173,43 +179,73 @@ async function initAdvent() {
     document.querySelector('.advent-progress-bar .days .day:nth-child(2)').style.visibility = "hidden";
   }
 
-  // Load the game card dates
+  // Load the game cards
   var today = getDate(new Date());
-  var tomorrowDate = new Date();
-  tomorrowDate.setDate(tomorrowDate.getDate() + 1);
-  var tomorrow = getDayOfWeek(tomorrowDate);
   Array.from(document.querySelectorAll('.main-card .card-link.date')).forEach(function(element) {
     element.innerHTML = today;
   });
-  Array.from(document.querySelectorAll('.thumbnail-card .card-link.date')).forEach(function(element) {
-    element.innerHTML = tomorrow;
-  });
+
+  // Load the locked game cards for the number of days left
+  var numDaysLeft = ADVENT_DAYS - day;
+  for (var gameCard of GAME_CARDS) {
+    var gameContainerElement = document.getElementById(gameCard.id);
+    var tomorrowDate = new Date();
+    for (var i = 0; i < numDaysLeft; i++) {
+      tomorrowDate.setDate(tomorrowDate.getDate() + 1);
+      var tomorrow = getDayOfWeek(tomorrowDate);
+      var thumbnailCard = document.createElement('div');
+      thumbnailCard.classList = "card thumbnail-card";
+      thumbnailCard.id = gameCard.id + "-card";
+      thumbnailCard.innerHTML = 
+              '<span class="position-absolute top-0 start-0 translate-middle badge rounded-pill text-bg-light">' + 
+                  '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">' + 
+                      '<path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>' + 
+                  '</svg>' + 
+                  '<span class="visually-hidden">locked</span>' + 
+              '</span>' + 
+              '<div class="card-body">' + 
+                  '<div class="card-body-description">' + 
+                      '<img src=/>' + 
+                  '</div>' + 
+                  '<span class="card-link date">' + tomorrow + '</span>' + 
+              '</div>';
+      gameContainerElement.appendChild(thumbnailCard);
+    }
+    // Must manually update the src property of the thumbnail images
+    document.querySelectorAll("#" + gameCard.id + " .thumbnail-card .card-body .card-body-description img").forEach(function(element) {
+      element.src = gameCard.image;
+    });
+  }
 }
 
 /* Resets all game progress and start date. */
 function resetAdvent() {
-  deleteCookie("start-date");
-  deleteCookie("date");
-  deleteCookie("day");
-  deleteGameState();
-  deleteCookie("mini-num-played");
-  deleteCookie("mini-win-percentage");
-  deleteCookie("mini-win-streak");
-  deleteCookie("mini-win-streak-max");
-  deleteCookie("wordle-num-played");
-  deleteCookie("wordle-win-percentage");
-  deleteCookie("wordle-win-streak");
-  deleteCookie("wordle-win-streak-max");
-  deleteCookie("wordle-win-distribution");
-  deleteCookie("strands-num-played");
-  deleteCookie("strands-win-percentage");
-  deleteCookie("strands-win-streak");
-  deleteCookie("strands-win-streak-max");
-  deleteCookie("connections-num-played");
-  deleteCookie("connections-win-percentage");
-  deleteCookie("connections-win-streak");
-  deleteCookie("connections-win-streak-max");
-  window.location.reload();
+  if (confirm('Are you sure you want to reset the advent calendar? You will start from Day 1.')) {
+    // Yes
+    deleteCookie("start-date");
+    deleteCookie("date");
+    deleteCookie("day");
+    deleteGameState();
+    deleteCookie("mini-num-played");
+    deleteCookie("mini-win-percentage");
+    deleteCookie("mini-win-streak");
+    deleteCookie("mini-win-streak-max");
+    deleteCookie("wordle-num-played");
+    deleteCookie("wordle-win-percentage");
+    deleteCookie("wordle-win-streak");
+    deleteCookie("wordle-win-streak-max");
+    deleteCookie("wordle-win-distribution");
+    deleteCookie("strands-num-played");
+    deleteCookie("strands-win-percentage");
+    deleteCookie("strands-win-streak");
+    deleteCookie("strands-win-streak-max");
+    deleteCookie("connections-num-played");
+    deleteCookie("connections-win-percentage");
+    deleteCookie("connections-win-streak");
+    deleteCookie("connections-win-streak-max");
+    window.location.reload();
+  }
+  // Otherwise, do nothing
 }
 
 function goToMiniGame() {

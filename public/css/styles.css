@@ -105,8 +105,9 @@ h1, h2, h3, h4, h5, h6, .heading-font {
 }
 
 .advent-progress-bar .progress-bubbles .progress {
-    background-color: #f5d5d7;
+    background-color: #fff;
     border-radius: 10px;
+    border: 2px solid #eda4a8;
 }
 
 .advent-progress-bar .progress-bubbles .progress .progress-bar {
