@@ -1,7 +1,7 @@
 5
 One of the Team Rocket members does this|MEOWS|0|0
 This Pokémon has the most evolutions|EEVEE|1|1
-Kenobi of Star Wars|OBI|2|1
+Kenobi of "Star Wars"|OBI|2|1
 How to catch 'em all|WIN|3|1
 Jirachi's type|STEEL|4|1
 Typically in red on a statement|DEBIT|5|0

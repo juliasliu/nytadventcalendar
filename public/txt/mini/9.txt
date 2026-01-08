@@ -1,0 +1,11 @@
+6
+The protagonist in this TV show|BOJACK|0|0
+What the character voiced by 3-Down in this TV show has|BANGS|0|1
+A character played by the voice actor of Todd Chavez|JESSE|2|1
+Actor whose last name is cheese|ALISON|3|1
+The Celebrity Stealing Club, for short|KLEPTO|5|1
+Indonesian fried rice|NASI|12|0
+"It's all going to be ___"|AOK|13|1
+What Tom Jumbo-Grumbo reports on|GOSSIP|18|0
+Used for drying fish and meat|SKEO|24|0
+Keanu in "The Matrix"|NEO|33|0

@@ -1,0 +1,10 @@
+5
+Where the treble and bass are|STAFF|0|0
+When you do 8-Across with alcohol|TIPSY|1|1
+What Van Gogh cut a part of|ANEAR|2|1
+Loud, for a musician|FORTE|3|1
+From|FRAE|4|1
+Aeolion, harmonic, or melodic|MINOR|5|0
+Mozart's "The Magic Flute"|OPERA|10|0
+To soothe|SATE|16|0
+Jane ___|EYRE|20|0
