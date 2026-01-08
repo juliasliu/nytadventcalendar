@@ -1,0 +1,9 @@
+5
+The McGill standoff|TRIAL|1|1
+It is orange or purple|YAM|3|1
+Zafiro ___|ANEJO|4|1
+Actor who played Walter White|BRYAN|5|0
+He says everything backwards|YODA|7|1
+An ecological zone|BIOME|10|0
+A fellow|LAD|15|0
+A Salamanca who never crossed paths with 5-Across|LALO|21|0

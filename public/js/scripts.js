@@ -43,6 +43,21 @@ function isSameDay(original_date, new_date) {
           original_date.getDate() === new_date.getDate()
 }
 
+/* Deletes all game states. */
+function deleteGameState() {
+  deleteCookie("date");
+  deleteCookie("mini-game-state");
+  deleteCookie("mini-seconds-passed");
+  deleteCookie("mini-submitted-grid");
+  deleteCookie("wordle-game-state");
+  deleteCookie("wordle-submitted-words");
+  deleteCookie("strands-game-state");
+  deleteCookie("strands-submitted-indices");
+  deleteCookie("strands-submitted-word-indices");
+  deleteCookie("connections-game-state");
+  deleteCookie("connections-submitted-words");
+}
+
 function loadCookies() {
   // Check today's date
   let startDate = getCookie("start-date");
@@ -58,35 +73,16 @@ function loadCookies() {
       let saved_date = new Date(getCookie("date"));
       if (!isSameDay(saved_date, current_date)) {
         // Also delete every game state if no game has been started today
-        deleteCookie("date");
-        deleteCookie("mini-game-state");
-        deleteCookie("mini-seconds-passed");
-        deleteCookie("mini-submitted-grid");
-        deleteCookie("wordle-game-state");
-        deleteCookie("wordle-submitted-words");
-        deleteCookie("strands-game-state");
-        deleteCookie("strands-submitted-indices");
-        deleteCookie("strands-submitted-word-indices");
-        deleteCookie("connections-game-state");
-        deleteCookie("connections-submitted-words");
+        deleteGameState();
       }
     }
   } else {
     // If the advent calendar is not started, set the day number to 1
+    deleteCookie("day"); // jic
     setCookie("day", 1, NUM_EXPIRATION_DAYS);
     setCookie("start-date", new Date(), NUM_EXPIRATION_DAYS);
     // Also set every game stat to zero
-    deleteCookie("date");
-    deleteCookie("mini-game-state");
-    deleteCookie("mini-seconds-passed");
-    deleteCookie("mini-submitted-grid");
-    deleteCookie("wordle-game-state");
-    deleteCookie("wordle-submitted-words");
-    deleteCookie("strands-game-state");
-    deleteCookie("strands-submitted-indices");
-    deleteCookie("strands-submitted-word-indices");
-    deleteCookie("connections-game-state");
-    deleteCookie("connections-submitted-words");
+    deleteGameState();
     setCookie("mini-num-played", 0, NUM_EXPIRATION_DAYS);
     setCookie("mini-win-percentage", 0, NUM_EXPIRATION_DAYS);
     setCookie("mini-win-streak", 0, NUM_EXPIRATION_DAYS);
@@ -190,6 +186,32 @@ async function initAdvent() {
   });
 }
 
+/* Resets all game progress and start date. */
+function resetAdvent() {
+  deleteCookie("start-date");
+  deleteCookie("date");
+  deleteCookie("day");
+  deleteGameState();
+  deleteCookie("mini-num-played");
+  deleteCookie("mini-win-percentage");
+  deleteCookie("mini-win-streak");
+  deleteCookie("mini-win-streak-max");
+  deleteCookie("wordle-num-played");
+  deleteCookie("wordle-win-percentage");
+  deleteCookie("wordle-win-streak");
+  deleteCookie("wordle-win-streak-max");
+  deleteCookie("wordle-win-distribution");
+  deleteCookie("strands-num-played");
+  deleteCookie("strands-win-percentage");
+  deleteCookie("strands-win-streak");
+  deleteCookie("strands-win-streak-max");
+  deleteCookie("connections-num-played");
+  deleteCookie("connections-win-percentage");
+  deleteCookie("connections-win-streak");
+  deleteCookie("connections-win-streak-max");
+  window.location.reload();
+}
+
 function goToMiniGame() {
   window.open('/mini', '_self');
 }
@@ -218,6 +240,9 @@ if (document.getElementById('connections-card')) {
 }
 if (document.getElementById('strands-card')) {
     document.getElementById('strands-card').addEventListener('click', goToStrandsGame);
+}
+if (document.getElementById('reset-button')) {
+    document.getElementById('reset-button').addEventListener('click', resetAdvent);
 }
 
 initAdvent();

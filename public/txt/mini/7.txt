@@ -1,0 +1,10 @@
+5
+She plays a character of the same name in this movie|EMILY|0|0
+What people do in 7-Across|ELOPE|0|1
+Andy is getting dressed during this part of the movie|INTRO|2|1
+"That sweater is not ___, it's actually cerulean"|LAPIS|3|1
+It is used in sourdough starter|YEAST|4|1
+It accompanies a whip|NAE|7|0
+A Florida airport, for short|TPA|12|0
+The city hosting the fashion week in this movie|PARIS|15|0
+Movie soundtrack, for short|OST|22|0
