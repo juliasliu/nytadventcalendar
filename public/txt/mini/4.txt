@@ -3,6 +3,7 @@ The McGill standoff|TRIAL|1|1
 It is orange or purple|YAM|3|1
 Zafiro ___|ANEJO|4|1
 Actor who played Walter White|BRYAN|5|0
+A surgery for the cheeks|BBL|5|1
 He says everything backwards|YODA|7|1
 An ecological zone|BIOME|10|0
 A fellow|LAD|15|0
