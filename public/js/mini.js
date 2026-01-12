@@ -295,7 +295,7 @@ function highlightTiles() {
     // Then select and highlight tiles
     var letterRectElement;
     if (currentDirection == Direction.ACROSS) {
-        for (n = 0; n < GRID_SIZE; n++) {
+        for (n = 0; n < secretWords[currentWordIndex].word.length; n++) {
             if (crosswordGrid[i][n].number >= 0) {
                 index = i * GRID_SIZE + n;
                 letterRectElement = document.getElementById('cell-' + index);
@@ -304,7 +304,7 @@ function highlightTiles() {
         }
         document.getElementById('hint').innerHTML = secretWords[crosswordGrid[i][j].acrossIndex].hint;
     } else if (currentDirection == Direction.DOWN) {
-        for (m = 0; m < GRID_SIZE; m++) {
+        for (m = 0; m < secretWords[currentWordIndex].word.length; m++) {
             if (crosswordGrid[m][j].number >= 0) {
                 index = m * GRID_SIZE + j;
                 letterRectElement = document.getElementById('cell-' + index);
