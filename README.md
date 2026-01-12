@@ -7,10 +7,10 @@ The advent calendar will start when you attempt any of the four games. The days 
 
 Go to [nytadventcalendar.vercel.app](https://nytadventcalendar.vercel.app) to start playing!
 
+It is highly recommended to play in your mobile browser as the UI is adapted for the phone screen dimensions.
+
 *Caution: The website heavily uses cookies to store in-game progress. Resetting your browser's cookies will reset the number of days advanced in the advent calendar.*
 
 ![Home page](public/img/home_page.png)
 
-### Appendix
-
-This code is written on a Node.js + Express.js server deployed on Vercel. The game solutions are currently hardcoded in .txt files and stored on the client side (don't peek!).
+The server code is written in Node.js + Express.js and deployed on Vercel. The client code is written in vanilla JS and is responsible for the game design logic and DOM manipulation. The game solutions are currently hardcoded in .txt files and stored on the client side (don't peek!).
