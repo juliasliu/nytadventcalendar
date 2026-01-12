@@ -61,6 +61,7 @@ function deleteGameState() {
   deleteCookie("strands-submitted-indices");
   deleteCookie("strands-submitted-word-indices");
   deleteCookie("connections-game-state");
+  deleteCookie("connections-mistakes-remaining");
   deleteCookie("connections-submitted-words");
 }
 

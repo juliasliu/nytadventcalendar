@@ -26,13 +26,13 @@ var secretGroupsLeft = [];
 var wordStatusList = [];
 var selectedWords = [];
 var numRowsLeft = NUM_TOTAL_GROUPS;
-var numMistakesRemaining = NUM_MISTAKES_ALLOWED;
 var canSelect = true;
 /* Connections game state */
 // Each row represents a group of words that were submitted
 // Each entry of the row is an index of the category the word is actually in
 var submittedWords = [];
 var gameWinState = false;
+var numMistakesRemaining = NUM_MISTAKES_ALLOWED;
 /* Strands game streak and stats */
 var numPlayed = 0;
 var winPercentage = 0;
@@ -92,6 +92,14 @@ function initWords() {
             secretGroups.push({ category: category, words: words });
         }
 
+        let storedMistakesRemaining = getCookie("connections-mistakes-remaining");
+        if (storedMistakesRemaining != "") {
+            // Use the mistakes counter instead of the default starting number
+            numMistakesRemaining = Number(getCookie("connections-mistakes-remaining"));
+            for (var i = NUM_MISTAKES_ALLOWED - 1; i >= numMistakesRemaining; i--) {
+                document.getElementById('mistake-' + i).style.display = "none";
+            }
+        }
         let storedGameState = getCookie("connections-game-state");
         // Regardless of whether the game was started or not, fill in the words of the grid
         fillSubmittedWords();
@@ -234,6 +242,7 @@ function submitWords() {
             toastBootstrap.show();
         }
         numMistakesRemaining--;
+        setCookie("connections-mistakes-remaining", numMistakesRemaining);
         if (numMistakesRemaining < 0) {
             // Game over
             setLoseGameState(true);
