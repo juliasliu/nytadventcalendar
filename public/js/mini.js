@@ -294,19 +294,21 @@ function highlightTiles() {
     }
     // Then select and highlight tiles
     var letterRectElement;
+    m = Math.floor(secretWords[currentWordIndex].startPosition / GRID_SIZE);
+    n = secretWords[currentWordIndex].startPosition % GRID_SIZE;
     if (currentDirection == Direction.ACROSS) {
-        for (n = 0; n < secretWords[currentWordIndex].word.length; n++) {
-            if (crosswordGrid[i][n].number >= 0) {
-                index = i * GRID_SIZE + n;
+        for (var counter = 0; counter < secretWords[currentWordIndex].word.length; counter++) {
+            if (crosswordGrid[m][n + counter].number >= 0) {
+                index = m * GRID_SIZE + (n + counter);
                 letterRectElement = document.getElementById('cell-' + index);
                 letterRectElement.setAttribute('class', 'cell-highlighted');
             }
         }
         document.getElementById('hint').innerHTML = secretWords[crosswordGrid[i][j].acrossIndex].hint;
     } else if (currentDirection == Direction.DOWN) {
-        for (m = 0; m < secretWords[currentWordIndex].word.length; m++) {
-            if (crosswordGrid[m][j].number >= 0) {
-                index = m * GRID_SIZE + j;
+        for (var counter = 0; counter < secretWords[currentWordIndex].word.length; counter++) {
+            if (crosswordGrid[m + counter][n].number >= 0) {
+                index = (m + counter) * GRID_SIZE + n;
                 letterRectElement = document.getElementById('cell-' + index);
                 letterRectElement.setAttribute('class', 'cell-highlighted');
             }
