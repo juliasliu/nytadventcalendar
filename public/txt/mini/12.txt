@@ -1,0 +1,14 @@
+6
+Lotus bi___ cookies|SCOFFS|0|0
+Like a tres leches|SOGGY|0|1
+A type of cake|CHEESE|1|1
+A technique used for baked alaskas|FLAMBE|3|1
+A type of 2-Down|FETA|4|1
+Not yet, but ___|SOON|5|1
+I see|OH|6|0
+A person born in July or August|LEO|9|0
+A popular Italian dessert|GELATO|12|0
+An active NASA moon orbit mission, abbreviated|LRO|14|1
+The country of black forest cakes|GERMAN|18|0
+You son of a bitch|YSOB|24|0
+A main ingredient of sponge cakes|EGG|33|0
