@@ -371,7 +371,7 @@ function moveBackwards() {
     if (isAtBeginningOfWord()) goToPrevWord();
     else {
         if (currentDirection == Direction.ACROSS) currentIndex--;
-        else currentIndex -= 5;
+        else currentIndex -= GRID_SIZE;
     }
 }
 
@@ -379,7 +379,7 @@ function moveForward() {
     if (isCrosswordFilled() && isAtEndOfWord()) currentIndex = secretWords[currentWordIndex].startPosition;
     else {
         if (currentDirection == Direction.ACROSS) currentIndex++;
-        else currentIndex += 5;
+        else currentIndex += GRID_SIZE;
     }
     var nextIndex = getNextIndexOfWord();
     if (nextIndex == -1) goToNextWord();
@@ -468,23 +468,9 @@ function backspace() {
     var i = Math.floor(currentIndex / GRID_SIZE);
     var j = currentIndex % GRID_SIZE;
     if (crosswordStatusGrid[i][j] == Status.UNFILLED) {
-        // If tile is unfilled
-        if (isAtBeginningOfWord()) {
-            // If at beginning of word, go to previous word and remove the last letter
-            currentWordIndex--;
-            if (currentWordIndex == -1) currentWordIndex = secretWords.length - 1;
-            if (currentDirection == Direction.ACROSS) {
-                currentIndex = secretWords[currentWordIndex].startPosition + secretWords[currentWordIndex].word.length - 1;
-            } else if (currentDirection == Direction.DOWN) {
-                currentIndex = secretWords[currentWordIndex].startPosition + 5 * (secretWords[currentWordIndex].word.length - 1);
-            }
-            currentDirection = secretWords[currentWordIndex].direction;
-            deleteCurrentLetter();
-        } else {
-            // Move backwards and remove letter
-            moveBackwards();
-            deleteCurrentLetter();
-        }
+        // If tile is unfilled, move backwards and then delete the last letter
+        moveBackwards();
+        deleteCurrentLetter();
     } else {
         // If tile has a letter, remove the letter and do not move backwards
         deleteCurrentLetter();

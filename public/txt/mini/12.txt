@@ -1,5 +1,5 @@
 6
-Lotus bi___ cookies|SCOFFS|0|0
+Lotus bi___|SCOFFS|0|0
 Like a tres leches|SOGGY|0|1
 A type of cake|CHEESE|1|1
 A technique used for baked alaskas|FLAMBE|3|1
