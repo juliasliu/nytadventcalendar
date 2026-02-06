@@ -1,5 +1,5 @@
 6
-A person who takes your car|TOWMAN|1|1
+A person who takes one's car|TOWMAN|1|1
 Sexiest man of the year|BAILEY|3|1
 The lion in Oz|COWARD|6|0
 Capital of Egypt|CAIRO|6|1
