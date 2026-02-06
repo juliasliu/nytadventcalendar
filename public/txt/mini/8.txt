@@ -1,6 +1,7 @@
 5
 Where the treble and bass are|STAFF|0|0
-When you do 8-Across with alcohol|TIPSY|1|1
+A marketing method involving social media, for short|SMO|0|1
+What one becomes when one does 8-Across with alcohol|TIPSY|1|1
 What Van Gogh cut a part of|ANEAR|2|1
 Loud, for a musician|FORTE|3|1
 From|FRAE|4|1

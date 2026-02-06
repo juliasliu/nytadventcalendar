@@ -1,7 +1,7 @@
 5
 The Walking ___|DEAD|1|0
 What a lot of characters are in this genre|DENSE|1|1
-What you can become in 1-Across|EATEN|2|1
+What one can become in 1-Across|EATEN|2|1
 A popular movie franchise|ALIEN|3|1
 To drink a potion|HEAL|5|0
 Wednesday of the week|HUMP|5|1
